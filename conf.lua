@@ -1,6 +1,6 @@
 function love.conf(t)
   t.title              = 'Strategy'
-  t.authors            = 'Michael Kosler'
+  t.authors            = 'Michael Kosler, Wally Tung, Stefan Levy, Christopher Trask'
   t.screen.width       = 800
   t.screen.height      = 600
   t.modules.audio      = true
