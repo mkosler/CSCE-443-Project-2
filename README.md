@@ -70,23 +70,31 @@ Below is a table describing the advantages and disadvantages units have against 
 
 ### Attacking
 
-| Attacking      | Light Infantry | Heavy Infantry | Light Vehicle | Heavy Vehicle | Helicopter |
-| -------------- |:--------------:|:--------------:|:-------------:|:-------------:|:----------:|
-| Light Infantry | X              | +              | X             | -             | X          |
-| Heavy Infantry | X              | X              | +             | X             | -          |
-| Light Vehicle  | X              | X              | X             | -             | +          |
-| Heavy Vehicle  | X              | X              | +             | X             | -          |
-| Helicopter     | -              | X              | -             | +             | X          |
+| Attacking      | Light Infantry | Heavy Infantry | Light Vehicle | Heavy Vehicle | Helicopter | Commander |
+| -------------- |:--------------:|:--------------:|:-------------:|:-------------:|:----------:|:---------:|
+| Light Infantry | X              | +              | X             | -             | X          | X         |
+| Heavy Infantry | X              | X              | +             | X             | -          | X         |
+| Light Vehicle  | X              | X              | X             | -             | +          | X         |
+| Heavy Vehicle  | X              | X              | +             | X             | -          | X         |
+| Helicopter     | -              | X              | -             | +             | X          | X         |
+| Commander      | 0              | 0              | 0             | 0             | 0          | 0         |
 
 ### Defending
 
-| Defending      | Light Infantry | Heavy Infantry | Light Vehicle | Heavy Vehicle | Helicopter |
-| -------------- |:--------------:|:--------------:|:-------------:|:-------------:|:----------:|
-| Light Infantry | X              | X              | X             | X             | +          |
-| Heavy Infantry | -              | X              | X             | X             | X          |
-| Light Vehicle  | X              | -              | X             | -             | +          |
-| Heavy Vehicle  | +              | X              | +             | X             | -          |
-| Helicopter     | X              | +              | -             | +             | X          |
+| Defending      | Light Infantry | Heavy Infantry | Light Vehicle | Heavy Vehicle | Helicopter | Commander |
+| -------------- |:--------------:|:--------------:|:-------------:|:-------------:|:----------:|:---------:|
+| Light Infantry | X              | X              | X             | X             | +          | N\A       |
+| Heavy Infantry | -              | X              | X             | X             | X          | N\A       |
+| Light Vehicle  | X              | -              | X             | -             | +          | N\A       |
+| Heavy Vehicle  | +              | X              | +             | X             | -          | N\A       |
+| Helicopter     | X              | +              | -             | +             | X          | N\A       |
+| Commander      | X              | X              | X             | X             | X          | N\A       |
+
+### Commander Unit 
+
+* Has Health( not a one hit kill )
+* Cannot Attack( but can retaliate )
+* Slowest Unit in the Game
 
 ## Combat
 
@@ -113,7 +121,6 @@ damage based on how much over the floor of the damage they are.
 For example, if, after all modifiers have been resolved, Unit A were to deal 3.25 damage to Unit B, then Unit A will have a 25% chance to deal 4
 damage to Unit B, and a 75% chance to deal 3 damage to Unit B.
 
-
 ## Levels (Battle Maps)
 
 There will be four or five pre-built maps where a battle can take place, designed to provide interesting choke points, but not
@@ -121,9 +128,29 @@ give an advantage to either player. Since there is a possibility to have local m
 
 All maps will be the same size.
 
+### Electrical Circuit Theme
+
+We plan to design these maps to look similar to a diagram of complex electrical circuits. We would use things like insulators, capacitors, and etc. 
+as terrain types. This should lend to a simplistic sytle while still being able to look good. 
+
+### Win state
+ 
+One side has lost the battle if:
+
+* They have lost the commander unit
+* The commander is the only unit that remains
+
 ## Overworld (Overall Map)
 
 The overall map is a simple grid of nodes with a distribution of strategic locations that, when captured by a side, give advantages to the
 controlling player.
 
 The overworld will be procedurally generated, ruled by providing a opening balance between each side.
+
+### Resources
+
+* gain more power the longer they are held by a single player( up to a cap, hopefully this will reduce back and forth fights over a single node )
+
+## Ideas
+
+If we have any ideas for features we would or could add into the game at some point, but were not in the original design, place them below.
