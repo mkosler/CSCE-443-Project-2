@@ -83,12 +83,12 @@ Below is a table describing the advantages and disadvantages units have against 
 
 | Defending      | Light Infantry | Heavy Infantry | Light Vehicle | Heavy Vehicle | Helicopter | Commander |
 | -------------- |:--------------:|:--------------:|:-------------:|:-------------:|:----------:|:---------:|
-| Light Infantry | X              | X              | X             | X             | +          | N\A       |
-| Heavy Infantry | -              | X              | X             | X             | X          | N\A       |
-| Light Vehicle  | X              | -              | X             | -             | +          | N\A       |
-| Heavy Vehicle  | +              | X              | +             | X             | -          | N\A       |
-| Helicopter     | X              | +              | -             | +             | X          | N\A       |
-| Commander      | X              | X              | X             | X             | X          | N\A       |
+| Light Infantry | X              | X              | X             | X             | +          | N/A       |
+| Heavy Infantry | -              | X              | X             | X             | X          | N/A       |
+| Light Vehicle  | X              | -              | X             | -             | +          | N/A       |
+| Heavy Vehicle  | +              | X              | +             | X             | -          | N/A       |
+| Helicopter     | X              | +              | -             | +             | X          | N/A       |
+| Commander      | X              | X              | X             | X             | X          | N/A       |
 
 ### Commander Unit 
 
