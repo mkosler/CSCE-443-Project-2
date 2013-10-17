@@ -77,7 +77,7 @@ These units are **light infantry**, **heavy infantry**, **light vehicles**, **he
 | Helicopter     | 7              |
 | Commander      | 1              |
 
-![](~)
+![hghgfh](entity movement chart.png)
 
 Below is a table describing the advantages and disadvantages units have against one another.
 
