@@ -146,7 +146,14 @@ All maps will be the same size.
 We plan to design these maps to look similar to a diagram of complex electrical circuits. We would use things like insulators, capacitors, and etc. 
 as terrain types. This should lend to a simplistic sytle while still being able to look good. 
 
-### Win state
+### Terrain
+
+* **Plain**: No special modifiers;
+* **Forest**: Increases defense while slowing movement;
+* **Mountain/Water**: impassible except for flying;
+* **Amplifier**: Increase attack while lowering defense;
+
+## Win State
  
 One side has lost the battle if:
 
