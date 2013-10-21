@@ -1,12 +1,13 @@
 local Combat = {}
 
 function Combat:init()
-
 end
 
 function Combat:enter(previous, unit1, unit2)
     self.unit1 = unit1
     self.unit2 = unit2
+
+    -- Perform combat calculations inside the enter function
 end
 
 function Combat:leave()

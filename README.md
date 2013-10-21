@@ -1,4 +1,4 @@
-# Strategy
+# SIGINT
 
 *a game for CSCE 443, built in [LOVE](http://www.love2d.org)*
 
