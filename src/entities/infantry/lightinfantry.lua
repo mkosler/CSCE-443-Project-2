@@ -3,8 +3,8 @@ local Entity = require 'src.entities.entity'
 
 local LightInfantry = Class{ __includes = Entity }
 
-function LightInfantry:init(x, y)
-  Entity.init(self, "LightInfantry", x, y)
+function LightInfantry:init(x, y, side)
+  Entity.init(self, "LightInfantry", x, y, side)
 end
 
 function LightInfantry:update(dt)
