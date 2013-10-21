@@ -1,9 +1,12 @@
 local Combat = {}
 
 function Combat:init()
+
 end
 
-function Combat:enter(previous)
+function Combat:enter(previous, unit1, unit2)
+    self.unit1 = unit1
+    self.unit2 = unit2
 end
 
 function Combat:leave()

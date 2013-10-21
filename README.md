@@ -70,11 +70,11 @@ These units are **light infantry**, **heavy infantry**, **light vehicles**, **he
 
 | Entities       | Movement       |
 | -------------- |:--------------:|
-| Light Infantry | 5              |
+| Light Infantry | 6              |
 | Heavy Infantry | 4              |
 | Light Vehicle  | 6              |
-| Heavy Vehicle  | 3              |
-| Helicopter     | 7              |
+| Heavy Vehicle  | 4              |
+| Helicopter     | 6              |
 | Commander      | 1              |
 
 ![hghgfh](entity movement chart.png)
