@@ -6,10 +6,14 @@ local Helicopter = Class{ __includes = Entity }
 
 function Helicopter:init(x, y, side)
   Entity.init(self, "Helicopter", x, y, side)
+  -- init control 
   self.flags = { 
     left = false,
-    right = false 
+    right = false, 
+    up = false, 
+    down = false
   }
+  -- init data 
   self.is_dead = false
   self.is_moved = false
   self.attack_value = 15
