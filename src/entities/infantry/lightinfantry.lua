@@ -3,8 +3,23 @@ local Entity = require 'src.entities.entity'
 
 local LightInfantry = Class{ __includes = Entity }
 
-function LightInfantry:init(x, y)
-  Entity.init(self, "LightInfantry", x, y)
+function LightInfantry:init(x, y, side)
+  Entity.init(self, "LightInfantry", x, y, side)
+  -- init control 
+  self.flags = { 
+    left = false,
+    right = false, 
+    up = false, 
+    down = false
+  }
+  -- init data 
+  self.is_dead = false
+  self.is_moved = false
+  self.attack_value = 15
+  self.id = COMBAT_DEFAULTS.LIGHT_INFANTRY.ID
+  self.hp = COMBAT_DEFAULTS.LIGHT_INFANTRY.HP
+  self.attack_amp = COMBAT_DEFAULTS.LIGHT_INFANTRY.ATTACKING
+  self.defend_amp = COMBAT_DEFAULTS.LIGHT_INFANTRY.DEFENDING
 end
 
 function LightInfantry:update(dt)

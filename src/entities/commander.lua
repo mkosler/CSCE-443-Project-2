@@ -3,8 +3,8 @@ local Entity = require 'src.entities.entity'
 
 local Commander = Class{ __includes = Entity }
 
-function Commander:init(x, y)
-  Entity.init(self, "Commander", x, y)
+function Commander:init(x, y, side)
+  Entity.init(self, "Commander", x, y, side)
 end
 
 function Commander:update(dt)
