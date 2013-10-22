@@ -1,3 +1,4 @@
+--- The combat rules for each unit
 return {
   LIGHT_INFANTRY = {
     ATTACKING = {

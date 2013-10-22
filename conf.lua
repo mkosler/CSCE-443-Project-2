@@ -1,3 +1,4 @@
+--- The LOVE configuration function
 function love.conf(t)
   t.title         = 'Strategy'
   t.authors       = 'Michael Kosler, Wally Tung, Stefan Levy, Christopher Trask'
