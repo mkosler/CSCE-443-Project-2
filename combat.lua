@@ -1,5 +1,6 @@
 return {
   LIGHT_INFANTRY = {
+    MOVE = 6,
     ATTACKING = {
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 2,
@@ -18,6 +19,7 @@ return {
     },
   },
   HEAVY_INFANTRY = {
+    MOVE = 4,
     ATTACKING = {
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
@@ -36,6 +38,7 @@ return {
     },
   },
   LIGHT_VEHICLE = {
+    MOVE = 6,
     ATTACKING = {
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
@@ -54,6 +57,7 @@ return {
     },
   },
   HEAVY_VEHICLE = {
+    MOVE = 4,
     ATTACKING = {
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
@@ -72,6 +76,7 @@ return {
     },
   },
   HELICOPTER = {
+    MOVE = 6,
     ATTACKING = {
       LIGHT_INFANTRY = 0.5,
       HEAVY_INFANTRY = 1,
@@ -90,6 +95,7 @@ return {
     },
   },
   COMMANDER = {
+    MOVE = 1,
     ATTACKING = {
       LIGHT_INFANTRY = 0,
       HEAVY_INFANTRY = 0,
