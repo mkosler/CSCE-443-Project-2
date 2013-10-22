@@ -1,5 +1,6 @@
 local Class = require 'lib.class'
 local Entity = require 'src.entities.entity'
+local COMBAT_DEFAULTS = require 'combat'
 
 local Helicopter = Class{ __includes = Entity }
 
@@ -9,6 +10,13 @@ function Helicopter:init(x, y, side)
     left = false,
     right = false 
   }
+  self.is_dead = false
+  self.is_moved = false
+  self.attack_value = 15
+  self.id = COMBAT_DEFAULTS.HELICOPTER.ID
+  self.hp = COMBAT_DEFAULTS.HELICOPTER.HP
+  self.attack_amp = COMBAT_DEFAULTS.HELICOPTER.ATTACKING
+  self.defend_amp = COMBAT_DEFAULTS.HELICOPTER.DEFENDING
 end
 
 function Helicopter:update(dt)

@@ -21,13 +21,13 @@ function Combat:update_hp()
 
     if self.dmg.atk_dmg > self.defender.hp then 
         self.defender.hp = 0
-        self.defender.died = true
+        self.defender.is_dead = true
     else
         self.defender.hp = self.defender.hp - self.dmg.atk_dmg
     end 
 
     -- if the defender died 
-    if not self.defender.died then 
+    if not self.defender.is_dead then 
         if self.dmg.def_dmg > self.attacker.hp then 
             self.attacker.hp = 0
         else
