@@ -35,7 +35,18 @@ function Combat:update_hp()
 end
 
 function Combat:cal_dmg(value, amp)
-    return value*amp
+    -- consider critical damage
+    if math.random() > 0.66 then 
+        self.dmg_crit = true
+    else 
+        self.dmg_crit = false
+    end 
+
+    if self.dmg_crit then 
+        return value*amp*(1.3 + 0.1 * math.random(1, 4))
+    else 
+        return value*amp
+    end 
 end 
 
 function Combat:leave()
