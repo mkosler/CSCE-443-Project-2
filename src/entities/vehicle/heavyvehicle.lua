@@ -16,6 +16,7 @@ function HeavyVehicle:init(x, y, side)
   self.is_dead = false
   self.is_moved = false
   self.attack_value = 15
+  self.attack_range = COMBAT_DEFAULTS.HEAVY_VEHICLE.ATTACKING.ATTACK_RANGE
   self.id = COMBAT_DEFAULTS.HEAVY_VEHICLE.ID
   self.hp = COMBAT_DEFAULTS.HEAVY_VEHICLE.HP
   self.attack_amp = COMBAT_DEFAULTS.HEAVY_VEHICLE.ATTACKING

@@ -12,6 +12,13 @@ Battle = require 'src.states.battle'
 -- GAMESTATES ----------------------------------------------------------
 ------------------------------------------------------------------------
 
+local Title = require 'src.states.title'
+
+------------------------------------------------------------------------
+-- FUNCTIONS -----------------------------------------------------------
+------------------------------------------------------------------------
+
+--- Called after LOVE modules loaded
 function love.load()
     Gamestate.registerEvents()
     Gamestate.switch(Title)
@@ -35,7 +42,6 @@ function love.mousereleased( x, y, button )
 end
 
 function love.keypressed(key, code)
-    -- Easy quitting for debug purposes
     loveframes.keypressed( key, code )
 end
 

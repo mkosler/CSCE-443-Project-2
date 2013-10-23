@@ -17,6 +17,7 @@ function Helicopter:init(x, y, side)
   self.is_dead = false
   self.is_moved = false
   self.attack_value = 15
+  self.attack_range = COMBAT_DEFAULTS.HELICOPTER.ATTACKING.ATTACK_RANGE
   self.id = COMBAT_DEFAULTS.HELICOPTER.ID
   self.hp = COMBAT_DEFAULTS.HELICOPTER.HP
   self.attack_amp = COMBAT_DEFAULTS.HELICOPTER.ATTACKING
@@ -37,19 +38,19 @@ end
 
 function Helicopter:mousepressed(x, y, button)
     -- flag on when the mouse click on the object 
-    if button == 'l' 
-        then self.flags.left = true 
-    elseif button == 'r'
-        then self.flags.right = true
+    if button == 'l' then 
+      self.flags.left = true 
+    elseif button == 'r' then 
+      self.flags.right = true
     end
 end
 
 function Helicopter:mousereleased(x, y, button)
     -- flag off when button released
-    if button == 'l'
-        then self.flags.left = false
-    elseif button == 'r'
-        then self.flags.right = false
+    if button == 'l' then 
+      self.flags.left = false
+    elseif button == 'r' then 
+      self.flags.right = false
     end 
 end
 

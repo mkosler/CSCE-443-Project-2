@@ -12,10 +12,11 @@ function LightInfantry:init(x, y, side)
     up = false, 
     down = false
   }
-  -- init data 
+  -- init data  
   self.is_dead = false
   self.is_moved = false
   self.attack_value = 15
+  self.attack_range = COMBAT_DEFAULTS.LIGHT_INFANTRY.ATTACKING.ATTACK_RANGE
   self.id = COMBAT_DEFAULTS.LIGHT_INFANTRY.ID
   self.hp = COMBAT_DEFAULTS.LIGHT_INFANTRY.HP
   self.attack_amp = COMBAT_DEFAULTS.LIGHT_INFANTRY.ATTACKING

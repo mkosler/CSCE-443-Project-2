@@ -66,18 +66,18 @@ computer fighting back. The game will be in 2D, inspired by the Advance Wars gam
 There are five total units, shared between both teams (i.e., both teams have the same unit types; the only differentiation is a palette swap).
 These units are **light infantry**, **heavy infantry**, **light vehicles**, **heavy vehicles**, and **helicopters**.
 
-### Movement 
+### Movement & Attack Range 
 
-| Entities       | Movement       |
-| -------------- |:--------------:|
-| Light Infantry | 6              |
-| Heavy Infantry | 4              |
-| Light Vehicle  | 6              |
-| Heavy Vehicle  | 4              |
-| Helicopter     | 6              |
-| Commander      | 1              |
+| Entities       | Movement       | Attack Range   | 
+| -------------- |:--------------:|:--------------:|
+| Light Infantry | 6              |1               |
+| Heavy Infantry | 4              |1               |
+| Light Vehicle  | 6              |1               |
+| Heavy Vehicle  | 4              |1               |
+| Helicopter     | 6              |1               |
+| Commander      | 1              |0               |
 
-![hghgfh](entity movement chart.png)
+![Move & Attack Range Chart](Entity Move&Attack Range.png)
 
 Below is a table describing the advantages and disadvantages units have against one another.
 
