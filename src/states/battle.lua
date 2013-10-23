@@ -1,7 +1,7 @@
 
 local Gamestate = require 'lib.gamestate'
 require( "src.GUI.general.util")
-BattleGUI = require( "src.GUI.Title.BattleGUI" )
+BattleGUI = require( "src.GUI.Battle.BattleGUI" )
 
 ------------------------------------------------------------------------
 -- Functions -----------------------------------------------------------
