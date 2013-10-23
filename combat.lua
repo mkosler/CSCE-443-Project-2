@@ -1,10 +1,12 @@
 --- The combat rules for each unit
 return {
   LIGHT_INFANTRY = {
+    -- img = love.graphics.newImage("art/1.png") 
     ID = 1,
     HP = 100,
     MOVE = 6,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 2,
       LIGHT_VEHICLE  = 1,
@@ -22,10 +24,12 @@ return {
     },
   },
   HEAVY_INFANTRY = {
+    -- img = love.graphics.newImage("art/2.png") 
     ID = 2,
     HP = 100,
     MOVE = 4,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
       LIGHT_VEHICLE  = 2,
@@ -43,10 +47,12 @@ return {
     },
   },
   LIGHT_VEHICLE = {
+    -- img = love.graphics.newImage("art/3.png") 
     ID = 3,
     HP = 100,
     MOVE = 6,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
       LIGHT_VEHICLE  = 1,
@@ -64,10 +70,12 @@ return {
     },
   },
   HEAVY_VEHICLE = {
+    -- img = love.graphics.newImage("art/4.png") 
     ID = 4,
     HP = 100,
     MOVE = 4,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
       LIGHT_VEHICLE  = 2,
@@ -85,10 +93,12 @@ return {
     },
   },
   HELICOPTER = {
+    -- img = love.graphics.newImage("art/5.png") 
     ID = 5,
     HP = 100,
     MOVE = 6,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 0.5,
       HEAVY_INFANTRY = 1,
       LIGHT_VEHICLE  = 0.5,
@@ -106,10 +116,12 @@ return {
     },
   },
   COMMANDER = {
+    -- img = love.graphics.newImage("art/6.png") 
     ID = 6,
     HP = 100,
     MOVE = 1,
     ATTACKING = {
+      ATTACK_RANGE   = 0,
       LIGHT_INFANTRY = 0,
       HEAVY_INFANTRY = 0,
       LIGHT_VEHICLE  = 0,
