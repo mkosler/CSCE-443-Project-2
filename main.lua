@@ -6,7 +6,8 @@ require('lib.LoveFrames')
 -- load Networking lib
 require('lib.LUBE.LUBE')
 local Gamestate = require 'lib.gamestate'
-local Title = require 'src.states.title'
+Title = require 'src.states.title'
+Battle = require 'src.states.battle'
 ------------------------------------------------------------------------
 -- GAMESTATES ----------------------------------------------------------
 ------------------------------------------------------------------------

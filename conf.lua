@@ -1,8 +1,10 @@
+conf = {}
 function love.conf(t)
-  t.title         = 'Strategy'
+    conf = t
+  t.title         = 'SIGINT'
   t.authors       = 'Michael Kosler, Wally Tung, Stefan Levy, Christopher Trask'
   t.console       = true
   t.release       = false
-  t.screen.width  = 640
-  t.screen.height = 480
+  t.screen.width  = 800
+  t.screen.height = 600
 end
