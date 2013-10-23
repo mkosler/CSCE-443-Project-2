@@ -4,6 +4,7 @@ return {
     HP = 100,
     MOVE = 6,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 2,
       LIGHT_VEHICLE  = 1,
@@ -25,6 +26,7 @@ return {
     HP = 100,
     MOVE = 4,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
       LIGHT_VEHICLE  = 2,
@@ -46,6 +48,7 @@ return {
     HP = 100,
     MOVE = 6,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
       LIGHT_VEHICLE  = 1,
@@ -67,6 +70,7 @@ return {
     HP = 100,
     MOVE = 4,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
       HEAVY_INFANTRY = 1,
       LIGHT_VEHICLE  = 2,
@@ -88,6 +92,7 @@ return {
     HP = 100,
     MOVE = 6,
     ATTACKING = {
+      ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 0.5,
       HEAVY_INFANTRY = 1,
       LIGHT_VEHICLE  = 0.5,
@@ -109,6 +114,7 @@ return {
     HP = 100,
     MOVE = 1,
     ATTACKING = {
+      ATTACK_RANGE   = 0,
       LIGHT_INFANTRY = 0,
       HEAVY_INFANTRY = 0,
       LIGHT_VEHICLE  = 0,
