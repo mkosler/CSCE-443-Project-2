@@ -1,13 +1,13 @@
-<<<<<<< HEAD
+
 local Gamestate = require 'lib.gamestate'
 require( "src.GUI.general.util")
 BattleGUI = require( "src.GUI.Title.BattleGUI" )
-=======
+
 ------------------------------------------------------------------------
 -- Functions -----------------------------------------------------------
 ------------------------------------------------------------------------
 
->>>>>>> origin/master
+
 local Battle = {}
 
 --- Initialize the state
