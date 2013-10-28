@@ -1,6 +1,5 @@
 
 local skin = {}
-local g = love.graphics
 
 skin.name = "default"
 skin.author = "WamS"
@@ -20,18 +19,22 @@ skin.controls.button_text_font                      = love.graphics.newFont("ass
 
 skin.controls.list_body_color                       = { 26, 26, 26, 255 }
 
+skin.controls.grid_outline_color = { 0, 0, 0, 0 }
+
 function skin.DrawFrame(object)
+    local g = love.graphics
     g.setColor( skin.controls.frame_color )
     g.rectangle("fill", object:GetX(), object:GetY(), object:GetWidth(), object:GetHeight())
 end
 
 function skin.DrawPanel(object)
+    local g = love.graphics
     g.setColor( skin.controls.panel_color )
     g.rectangle("fill", object:GetX(), object:GetY(), object:GetWidth(), object:GetHeight())
 end
 
 function skin.DrawButton(object)
-
+    local g = love.graphics
 	local skin = object:GetSkin()
 	local x = object:GetX()
 	local y = object:GetY()
@@ -116,6 +119,10 @@ end
 
 function skin.DrawOverList(object)
 	
+end
+
+function skin.DrawGrid(object)
+
 end
 
 loveframes.skins.Register(skin)

@@ -54,3 +54,15 @@ function create_text( str, x, y, width, height, skin_name )
     if_not_nil_set( skin_name, text.SetSkin, text )
     return text
 end
+
+function create_grid( x, y, num_columns, num_rows, cell_width, cell_height, skin_name )
+    local grid = loveframes.Create("grid")
+    if_not_nil_set( x, grid.SetX, grid )
+    if_not_nil_set( y, grid.SetY, grid )
+    if_not_nil_set( num_columns, grid.SetColumns, grid )
+    if_not_nil_set( num_rows, grid.SetRows, grid )
+    if_not_nil_set( cell_width, grid.SetCellWidth, grid )
+    if_not_nil_set( cell_height, grid.SetCellHeight, grid )
+    if_not_nil_set( skin_name, grid.SetSkin, grid )
+    return grid
+end

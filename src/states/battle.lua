@@ -1,7 +1,7 @@
 
 local Gamestate = require 'lib.gamestate'
-require( "src.GUI.general.util")
-BattleGUI = require( "src.GUI.Battle.BattleGUI" )
+local BattleMap = require( "src.BattleMap" )
+local BattleGUI = require( "src.GUI.Battle.BattleGUI" )
 
 ------------------------------------------------------------------------
 -- Functions -----------------------------------------------------------
@@ -9,6 +9,11 @@ BattleGUI = require( "src.GUI.Battle.BattleGUI" )
 
 
 local Battle = {}
+
+function Battle.create_test_map()
+    local map = BattleMap.init()
+    return map
+end
 
 --- Initialize the state
 -- Called only once after LOVE modules are loaded
@@ -20,7 +25,9 @@ end
 -- Called after every Gamestate.switch()
 -- @param previous The previous gamestate
 function Battle:enter(previous)
+    Battle.map = Battle.create_test_map()
     loveframes.SetState("Battle")
+    BattleGUI.createBattleGUI( self )
 end
 
 --- Tear down the state when leaving

@@ -1,11 +1,20 @@
 local TitleGUI = {}
 
+-- Callback definitions
+function TitleGUI.quit( object, x, y )
+    object.cb_state._quit = true
+end
+
+function TitleGUI.start_local_game( object, x, y )
+    object.cb_state._start_local_game = true
+end
+
 TitleGUI.skin_name = "default"
 TitleGUI.skin = loveframes.skins.Get("default")
 TitleGUI.font = love.graphics.newFont("assets/GUI/Fonts/Terminus.ttf", 40 )
 TitleGUI.title_font = love.graphics.newFont("assets/GUI/Fonts/Terminus.ttf", 100 )
 TitleGUI.menu_buttons = { "Start Local Game", "Quit" }
-TitleGUI.menu_button_callbacks = { function ( object, x, y ) object.cb_state._start_local_game = true end, function ( object, x, y ) object.cb_state._quit = true end }
+TitleGUI.menu_button_callbacks = { TitleGUI.start_local_game, TitleGUI.quit }
 TitleGUI.text_color = { 0, 192, 0, 255 }
 
 function TitleGUI.createTitleGUI( Title_State )
@@ -65,16 +74,6 @@ function TitleGUI.make_menu_buttons( Title_State, width )
         table.insert( buttons, button )
     end
     return buttons
-end
-
-function TitleGUI.quit( object, x, y )
-    print "clicked"
-    object.cb_state._quit = true
-end
-
-function TitleGUI.start_local_game( object, x, y )
-    print "clicked"
-    object.cb_state._start_local_game = true
 end
 
 return TitleGUI
