@@ -45,7 +45,7 @@ function BattleMap.init()
                     else
                         yi = -1
                     end
-                    BattleMap.graph:add( tiles[x][y], tiles[x+xi][y+yi] )
+                    BattleMap.graph:add( tiles[x][y], tiles[x+xi][y-yi] )
                 end
             end
         end
