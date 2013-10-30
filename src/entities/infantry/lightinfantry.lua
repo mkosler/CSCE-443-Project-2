@@ -12,6 +12,8 @@ function LightInfantry:init(x, y, side)
     up = false, 
     down = false
   }
+  
+  self.image_name = "troop.png"
   -- init data  
   self.is_dead = false
   self.is_moved = false
@@ -26,8 +28,8 @@ end
 function LightInfantry:update(dt)
 end
 
-function LightInfantry:draw()
-end
+--function LightInfantry:draw()
+--end
 
 function LightInfantry:keypressed(key, code)
 end

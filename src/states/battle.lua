@@ -1,5 +1,4 @@
 
-local Gamestate = require 'lib.gamestate'
 local BattleMap = require( "src.BattleMap" )
 local BattleGUI = require( "src.GUI.Battle.BattleGUI" )
 
@@ -15,6 +14,22 @@ function Battle.create_test_map()
     return map
 end
 
+function Battle.create_test_units()
+    local hv = require( "src.entities.vehicle.heavyvehicle" )
+    hv:init( 1, 1, 0 )
+    local li = require( "src.entities.infantry.lightinfantry" )
+    li:init( 1, 2, 1 )
+    local heli = require( "src.entities.helicopter" )
+    heli:init( 2, 2, 1 )
+    return { hv, li, heli }
+    --local test_types
+    --local units = {}
+    --for i=0, 5, 1 do
+        
+    --end    
+end
+
+
 --- Initialize the state
 -- Called only once after LOVE modules are loaded
 -- Useful for loading in sprites and other memory heavy objects
@@ -26,6 +41,7 @@ end
 -- @param previous The previous gamestate
 function Battle:enter(previous)
     Battle.map = Battle.create_test_map()
+    Battle.units = Battle.create_test_units()
     loveframes.SetState("Battle")
     BattleGUI.createBattleGUI( self )
 end
@@ -33,6 +49,10 @@ end
 --- Tear down the state when leaving
 -- Called after every Gamestate.switch()
 function Battle:leave()
+    Battle.master:Remove()
+    Battle.master = nil
+    Battle.game_master = nil
+    Battle.map = nil
 end
 
 --- Update the state
@@ -62,6 +82,9 @@ end
 -- @param key The key pressed in the event, as a string (http://www.love2d.org/wiki/KeyConstant)
 -- @param code The ASCII value of the key pressed in the event
 function Battle:keyreleased(key, code)
+    if key == 'b' then
+        Gamestate.switch(Title)
+    end
 end
 
 --- Handles the mouse press events for the state

@@ -5,6 +5,7 @@ local HeavyVehicle = Class{ __includes = Entity }
 
 function HeavyVehicle:init(x, y, side)
   Entity.init(self, "HeavyVehicle", x, y, side)
+  self.image_name = "ht.png"
   -- init control 
   self.flags = { 
     left = false,
@@ -26,8 +27,8 @@ end
 function HeavyVehicle:update(dt)
 end
 
-function HeavyVehicle:draw()
-end
+--function HeavyVehicle:draw()
+--end
 
 function HeavyVehicle:keypressed(key, code)
 end

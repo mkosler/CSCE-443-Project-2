@@ -13,6 +13,7 @@ function Helicopter:init(x, y, side)
     up = false, 
     down = false
   }
+  self.image_name = "heli.png"
   -- init data 
   self.is_dead = false
   self.is_moved = false
@@ -27,8 +28,8 @@ end
 function Helicopter:update(dt)
 end
 
-function Helicopter:draw()
-end
+--function Helicopter:draw()
+--end
 
 function Helicopter:keypressed(key, code)
 end

@@ -37,6 +37,10 @@ function skin.DrawButton(object)
     if object.sub_object ~= nil then
         object.sub_object:draw(object)
     end
+    
+    if object.sub_unit ~= nil then
+        object.sub_unit:draw(object)
+    end
 end
 
 function skin.OutlinedRectangle(x, y, width, height, ovt, ovb, ovl, ovr)
