@@ -66,7 +66,7 @@ function Combat:cal_dmg(value, amp)
     if self.dmg_crit then 
         return value*amp*(1.3 + 0.1 * math.random(1, 4))
     else 
-        return value*amp
+        return value*amp*(0.8 + 0.1 * math.random(1, 4))
     end 
 end 
 
