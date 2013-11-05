@@ -12,11 +12,12 @@ function Combat:enter(previous, attacker, defender)
 end
 
 function Combat:update_hp()
-    local attacker_amp = get_atk_amp(self.defender.id)
-    local defender_amp = get_def_amp(self.attacker.id)
+    local attacker_amp = self:get_atk_amp()
+    local defender_amp = self:get_def_amp()
+
     self.dmg = { 
-      atk_dmg = cal_dmg(attacker.attack_value, attacker_amp),
-      def_dmg = cal_dmg(defender.defender_value, defender_amp)
+      atk_dmg = self:cal_dmg(self.attacker.attack_value, attacker_amp),
+      def_dmg = self:cal_dmg(self.defender.defender_value, defender_amp)
     }
 
     if self.dmg.atk_dmg > self.defender.hp then 
@@ -36,23 +37,12 @@ function Combat:update_hp()
     end 
 end
 
-function get_atk_amp( defender_id)
-    if     defender_id == 1 then return self.attacker.attack_amp.LIGHT_INFANTRY
-    elseif defender_id == 2 then return self.attacker.attack_amp.HEAVY_INFANTRY
-    elseif defender_id == 3 then return self.attacker.attack_amp.LIGHT_VEHICLE
-    elseif defender_id == 4 then return self.attacker.attack_amp.HEAVY_VEHICLE
-    elseif defender_id == 5 then return self.attacker.attack_amp.HELICOPTER
-    elseif defender_id == 6 then return self.attacker.attack_amp.COMMANDER
-
+function Combat:get_atk_amp()
+    return self.attacker.attack_amp[self.defender.name]
 end
 
-function get_def_amp( attacker_id)
-    if     attacker_id == 1 then return self.defender.defender_amp.LIGHT_INFANTRY
-    elseif attacker_id == 2 then return self.defender.defender_amp.HEAVY_INFANTRY
-    elseif attacker_id == 3 then return self.defender.defender_amp.LIGHT_VEHICLE
-    elseif attacker_id == 4 then return self.defender.defender_amp.HEAVY_VEHICLE
-    elseif attacker_id == 5 then return self.defender.defender_amp.HELICOPTER
-    elseif attacker_id == 6 then return self.defender.defender_amp.COMMANDER
+function Combat:get_def_amp( attacker_id)
+    return self.defender.defend_amp[self.attacker.name]
 end
 
 function Combat:cal_dmg(value, amp)
