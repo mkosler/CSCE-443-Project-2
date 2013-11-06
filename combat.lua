@@ -1,8 +1,7 @@
 --- The combat rules for each unit
 return {
   LIGHT_INFANTRY = {
-    -- img = love.graphics.newImage("art/1.png") 
-    ID = 1,
+    img = "light_infantry.png", 
     HP = 100,
     MOVE = 6,
     ATTACKING = {
@@ -24,8 +23,7 @@ return {
     },
   },
   HEAVY_INFANTRY = {
-    -- img = love.graphics.newImage("art/2.png") 
-    ID = 2,
+    img = "heavy_infantry.png",
     HP = 100,
     MOVE = 4,
     ATTACKING = {
@@ -47,8 +45,7 @@ return {
     },
   },
   LIGHT_VEHICLE = {
-    -- img = love.graphics.newImage("art/3.png") 
-    ID = 3,
+    img = "light_vehicle.png",
     HP = 100,
     MOVE = 6,
     ATTACKING = {
@@ -70,8 +67,7 @@ return {
     },
   },
   HEAVY_VEHICLE = {
-    -- img = love.graphics.newImage("art/4.png") 
-    ID = 4,
+    img = "heavy_vehicle.png",
     HP = 100,
     MOVE = 4,
     ATTACKING = {
@@ -93,8 +89,7 @@ return {
     },
   },
   HELICOPTER = {
-    -- img = love.graphics.newImage("art/5.png") 
-    ID = 5,
+    img = "helicopter.png", 
     HP = 100,
     MOVE = 6,
     ATTACKING = {
@@ -116,8 +111,7 @@ return {
     },
   },
   COMMANDER = {
-    -- img = love.graphics.newImage("art/6.png") 
-    ID = 6,
+    img = nil,--"commander.png" 
     HP = 100,
     MOVE = 1,
     ATTACKING = {
