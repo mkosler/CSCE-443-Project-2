@@ -12,8 +12,9 @@ local HeavyInfantry = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function HeavyInfantry:init(x, y, side)
-  Entity.init(self, "HeavyInfantry", x, y, side)
+  Entity.init(self, "HEAVY_INFANTRY", x, y, side)
   -- init data ---------------------------------
+    self.image_name = "HI.png"
   self.is_dead = false
   self.is_moved = false
   self.attack_value = 15

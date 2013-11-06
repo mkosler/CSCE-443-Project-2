@@ -17,11 +17,15 @@ end
 function Battle.create_test_units()
     local HV = require( "src.entities.vehicle.heavyvehicle" )
     hv = HV( 0, 0, 0 )
+    hv1 = HV( 1, 0, 0 )
+    hv2 = HV( 29, 0, 1 )
+    hv3 = HV( 28, 0, 1 )
     local LI = require( "src.entities.infantry.lightinfantry" )
     li = LI( 0, 1, 1 )
     local HELI = require( "src.entities.helicopter" )
     heli = HELI( 1, 0, 1 )
-    return { hv, li, heli }
+    
+    return { hv, hv1, hv2, hv3,  li, heli }
     --local test_types
     --local units = {}
     --for i=0, 5, 1 do
@@ -34,31 +38,61 @@ end
 -- Called only once after LOVE modules are loaded
 -- Useful for loading in sprites and other memory heavy objects
 function Battle:init()
+    
 end
 
 --- Set up state once entered
 -- Called after every Gamestate.switch()
 -- @param previous The previous gamestate
-function Battle:enter(previous)
-    Battle.map = Battle.create_test_map()
-    Battle.units = Battle.create_test_units()
+function Battle:enter(previous, reset)
+    if reset then
+        if Battle.master ~= nil then
+            Battle.master:Remove()
+        end
+        Battle.master = nil
+        Battle.game_master = nil
+        Battle.map = nil
+        self._quit = false
+        self._end_turn = false
+        Battle.map = Battle.create_test_map()
+        Battle.units = Battle.create_test_units()
+        BattleGUI.createBattleGUI( self )
+    end
     loveframes.SetState("Battle")
-    BattleGUI.createBattleGUI( self )
 end
 
 --- Tear down the state when leaving
 -- Called after every Gamestate.switch()
 function Battle:leave()
-    Battle.master:Remove()
-    Battle.master = nil
-    Battle.game_master = nil
-    Battle.map = nil
+    
 end
 
 --- Update the state
 -- Called once every frame before any draw calls
 -- @param dt The time between the last frame and the current frame (deltatime)
 function Battle:update(dt)
+    if self._quit then
+        Gamestate.switch(Title)
+    end
+    if self._end_turn then
+        self._end_turn = false
+        BattleMap.turn = BattleMap.turn + 1
+        BattleMap.selected_tile = nil
+        for i, tile in ipairs( BattleMap.movement_tiles ) do
+            tile.movement = false
+        end
+        for i, tile in ipairs( BattleMap.attack_tiles ) do
+            tile.attack = false
+        end
+        BattleMap.movement_tiles = {}
+        BattleMap.attack_tiles = {}
+        loveframes.skins.Get("teamui").set_team( BattleMap.turn )
+    end
+    for i, unit in ipairs(Battle.units) do
+        if unit.is_dead then
+            self.map.tiles[unit.x][unit.y].sub_unit = nil
+        end
+    end
 end
 
 --- Draw the state

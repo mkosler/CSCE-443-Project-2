@@ -12,8 +12,9 @@ local LightInfantry = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function LightInfantry:init(x, y, side)
-  Entity.init(self, "LightInfantry", x, y, side)
+  Entity.init(self, "LIGHT_INFANTRY", x, y, side)
   -- init data ---------------------------------
+    self.image_name = "LI.png"
     self.image_name = "troop.png"
   self.is_dead = false
   self.is_moved = false

@@ -12,8 +12,8 @@ local HeavyVehicle = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function HeavyVehicle:init(x, y, side)
-  Entity.init(self, "HeavyVehicle", x, y, side)
-  self.image_name = "ht.png"
+  Entity.init(self, "HEAVY_VEHICLE", x, y, side)
+  self.image_name = "HV.png"
   -- init data ---------------------------------
   self.is_dead = false
   self.is_moved = false

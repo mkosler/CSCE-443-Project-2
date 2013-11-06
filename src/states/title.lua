@@ -48,7 +48,7 @@ function Title:check_for_state_change()
     end
     if self._start_local_game then
         self._start_local_game = false
-        Gamestate.switch(Battle)
+        Gamestate.switch(Battle, true)
     end
 end
     

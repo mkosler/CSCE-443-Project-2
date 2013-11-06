@@ -9,6 +9,7 @@ COMBAT_DEFAULTS = require( "combat" )
 Gamestate = require 'lib.gamestate'
 Title = require 'src.states.title'
 Battle = require 'src.states.battle'
+Combat = require 'src.states.combat'
 ------------------------------------------------------------------------
 -- GAMESTATES ----------------------------------------------------------
 ------------------------------------------------------------------------

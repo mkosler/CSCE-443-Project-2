@@ -12,7 +12,7 @@ local Commander = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function Commander:init(x, y, side)
-  Entity.init(self, "Commander", x, y, side)
+  Entity.init(self, "COMMANDER", x, y, side)
     -- init data ---------------------------------
   self.is_dead = false
   self.is_moved = false

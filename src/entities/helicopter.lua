@@ -12,7 +12,7 @@ local Helicopter = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function Helicopter:init(x, y, side)
-  Entity.init(self, "Helicopter", x, y, side)
+  Entity.init(self, "HELICOPTER", x, y, side)
   self.image_name = "heli.png"
   
   -- init data ---------------------------------

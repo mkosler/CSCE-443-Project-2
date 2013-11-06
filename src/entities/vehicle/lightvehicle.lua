@@ -12,8 +12,9 @@ local LightVehicle = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function LightVehicle:init(x, y, side)
-  Entity.init(self, "LightVehicle", x, y, side)
+  Entity.init(self, "LIGHT_VEHICLE", x, y, side)
   -- init data ---------------------------------
+    self.image_name = "LV.png"
   self.is_dead = false
   self.is_moved = false
   self.attack_value = 15
