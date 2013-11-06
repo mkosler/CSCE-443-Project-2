@@ -19,9 +19,7 @@ Tile.num_connections = 2*math.pi/Tile.connection_interval
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile in the tilemap
 -- @param column Column of the tile in the tilemap
-function Tile.init(name, x, y)
-    local self = {}
-    setmetatable(self,Tile)
+function Tile.init(self, name, x, y)
   self.name = name
   self.x = x
   self.y = y
@@ -29,10 +27,9 @@ function Tile.init(name, x, y)
   self.movement = false
   self.attack = false
   self.connections = {}
-  for i = 0, Tile.num_connections, 1 do
+  for i = 0, Tile.num_connections-1, 1 do
     self.connections[i] = false
   end
-  return self
 end
 
 --- Draw the tile
@@ -54,7 +51,7 @@ function Tile:draw(object)
     local body_color = skin.controls.button_body_color
     local outline_color = skin.controls.button_outline
     local connection_color = skin.controls.connection_color
-    local connection_interval = skin.controls.connection_interval
+    local sub_unit = self.sub_unit
     
     if self.selected then
         outline_color = skin.controls.button_outline_selected
@@ -82,7 +79,7 @@ function Tile:draw(object)
     love.graphics.print(text, x + width/2 - twidth/2, y + height/2 - theight/2)
     
     love.graphics.setColor(connection_color)
-    for i = 0, Tile.num_connections, 1 do
+    for i = 0, Tile.num_connections-1, 1 do
         local exists = self.connections[i]
         if exists then
             local rotation = Tile.connection_interval*i
@@ -92,6 +89,10 @@ function Tile:draw(object)
             local y2 = -(height/2)*math.sin(rotation)+y1
             love.graphics.line( x1, y1, x2, y2 )
         end
+    end
+    
+    if sub_unit ~= nil then
+        sub_unit:draw(object)
     end
 end
 

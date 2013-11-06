@@ -15,12 +15,12 @@ function Battle.create_test_map()
 end
 
 function Battle.create_test_units()
-    local hv = require( "src.entities.vehicle.heavyvehicle" )
-    hv:init( 1, 1, 0 )
-    local li = require( "src.entities.infantry.lightinfantry" )
-    li:init( 1, 2, 1 )
-    local heli = require( "src.entities.helicopter" )
-    heli:init( 2, 2, 1 )
+    local HV = require( "src.entities.vehicle.heavyvehicle" )
+    hv = HV( 0, 0, 0 )
+    local LI = require( "src.entities.infantry.lightinfantry" )
+    li = LI( 0, 1, 1 )
+    local HELI = require( "src.entities.helicopter" )
+    heli = HELI( 1, 0, 1 )
     return { hv, li, heli }
     --local test_types
     --local units = {}

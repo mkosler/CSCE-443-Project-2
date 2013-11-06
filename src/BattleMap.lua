@@ -11,17 +11,17 @@ function BattleMap.init()
     self.height = 15
     BattleMap.graph = Graph:new()
     local tiles = {}
-    for x = 0, self.width, 1 do
+    for x = 0, self.width-1, 1 do
         table.insert(tiles, x, {})
-        for y = 0, self.height, 1 do
-            table.insert( tiles[x], y, Tile.init( x..":"..y, x, y ) )
+        for y = 0, self.height-1, 1 do
+            table.insert( tiles[x], y, Tile( x..":"..y, x, y ) )
         end
     end
-    for x = 0, self.width, 1 do
-        for y = 0, self.height, 1 do
+    for x = 0, self.width-1, 1 do
+        for y = 0, self.height-1, 1 do
             BattleMap.graph:createNode( tiles[x][y] )
-			tiles[x][y].connections[ 0 ] =((math.random() <= .3) and (x<self.width-1))    
-			tiles[x][y].connections[ 3 ] =((math.random() <= .3) and (y<self.height))
+			--tiles[x][y].connections[ 0 ] =((math.random() <= .3) and (x<self.width-1))    
+			--tiles[x][y].connections[ 3 ] =((math.random() <= .3) and (y<self.height))
 			if (x < 3 or x>(self.width - 4))then
 				tiles[x][y].connections[ 0 ] =(x<self.width-1)    
 				tiles[x][y].connections[ 3 ] =(y<self.height)
@@ -59,22 +59,26 @@ function BattleMap.init()
             end 
         end
     end
-    for x = 0, self.width, 1 do
-        for y = 0, self.height, 1 do
-            for i = 0, 4, 1 do
+    for x = 0, self.width-1, 1 do
+        for y = 0, self.height-1, 1 do
+            for i = 0, 3, 1 do
                 if tiles[x][y].connections[i] then
                     local xi = 0
                     local yi = 0
                     if i == 0 then
                         xi = 1
                     elseif i == 1 then
-                        yi = 1
+                        yi = -1
                     elseif i == 2 then
                         xi = -1
                     else
-                        yi = -1
+                        yi = 1
                     end
-                    BattleMap.graph:add( tiles[x][y], tiles[x+xi][y-yi] )
+                    if x+xi < self.width and y+yi < self.height then
+                        BattleMap.graph:add( tiles[x][y], tiles[x+xi][y+yi] )
+                    else
+                        tiles[x][y].connections[i] = false
+                    end
                 end
             end
         end
@@ -96,15 +100,32 @@ end
 
 function BattleMap.selected( object, x, y )
     print "Clicked"
-    if BattleMap.selected_tile ~= nil then
-        BattleMap.selected_tile.selected = false
+    local old_tile = BattleMap.selected_tile
+    local new_tile = object.sub_object
+    local moved = false
+    if old_tile ~= nil then
+        local unit = old_tile.sub_unit
+        if new_tile.movement and new_tile.sub_unit == nil and unit ~= nil then
+            old_tile.sub_unit = nil
+            unit.x = new_tile.x
+            unit.y = new_tile.y
+            new_tile.sub_unit = unit
+            moved = true
+        end
+        old_tile.selected = false
         for i, tile in ipairs( BattleMap.movement_tiles ) do
             tile.movement = false
         end
     end
-    BattleMap.selected_tile = object.sub_object
-    BattleMap.show_paths( BattleMap.selected_tile, 2 )
-    object.sub_object:cb_selected( object, x, y )
+    if not moved then
+        if new_tile.sub_unit ~= nil then
+            BattleMap.show_paths( new_tile, 2 )
+        end
+        BattleMap.selected_tile = new_tile
+        new_tile:cb_selected( object, x, y )
+    else
+        BattleMap.selected_tile = nil
+    end
 end
 
 return BattleMap

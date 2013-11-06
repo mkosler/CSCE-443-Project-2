@@ -19,8 +19,8 @@ end
 
 function Entity:draw(object)
     local skin = object:GetSkin()
-	local x = object:GetX()
-	local y = object:GetY()
+	local rx = object:GetX()
+	local ry = object:GetY()
 	local width = object:GetWidth()
 	local height = object:GetHeight()
 	local hover = object:GetHover()
@@ -40,7 +40,7 @@ function Entity:draw(object)
         else
             love.graphics.setColor(255, 255, 255, 255)
         end
-        love.graphics.draw(image, x, y, 0, sx, sy, 0, 0 )
+        love.graphics.draw(image, rx+75*self.side, ry, 0, sx, sy, 0, 0 )
     else
         local text = self.name
         local font = skin.controls.button_text_font
@@ -49,7 +49,7 @@ function Entity:draw(object)
         local text_color = skin.controls.button_text_color
         love.graphics.setFont(font)
         love.graphics.setColor(text_color)
-        love.graphics.print(text, x + width/2 - twidth/2, y + height/2 - theight/2)
+        love.graphics.print(text, rx + width/2 - twidth/2, ry + height/2 - theight/2)
     end
 end
 
