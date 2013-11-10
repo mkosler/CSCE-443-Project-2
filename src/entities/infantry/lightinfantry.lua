@@ -12,7 +12,8 @@ local LightInfantry = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function LightInfantry:init(x, y, side)
-  Entity.init(self, "LIGHT_INFANTRY", x, y, side)
+  local self_name = "LIGHT_INFANTRY"
+  Entity.init(self, self_name, x, y, side)
   -- init data ---------------------------------
     self.image_name = "LI.png"
     self.image_name = "troop.png"
@@ -21,11 +22,12 @@ function LightInfantry:init(x, y, side)
   self.attack_value = 15
 
   -- init default values -----------------------
-  self.hp = COMBAT_DEFAULTS.LIGHT_INFANTRY.HP
-  self.move = COMBAT_DEFAULTS.LIGHT_INFANTRY.MOVE
-  self.attack_range = COMBAT_DEFAULTS.LIGHT_INFANTRY.ATTACKING.ATTACK_RANGE
-  self.attack_amp = COMBAT_DEFAULTS.LIGHT_INFANTRY.ATTACKING
-  self.defend_amp = COMBAT_DEFAULTS.LIGHT_INFANTRY.DEFENDING
+  self.cost = COMBAT_DEFAULTS[self_name].COST
+  self.hp = COMBAT_DEFAULTS[self_name].HP
+  self.move = COMBAT_DEFAULTS[self_name].MOVE
+  self.attack_range = COMBAT_DEFAULTS[self_name].ATTACKING.ATTACK_RANGE
+  self.attack_amp = COMBAT_DEFAULTS[self_name].ATTACKING
+  self.defend_amp = COMBAT_DEFAULTS[self_name].DEFENDING
 end
 
 function LightInfantry:update(dt)

@@ -12,7 +12,8 @@ local LightVehicle = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function LightVehicle:init(x, y, side)
-  Entity.init(self, "LIGHT_VEHICLE", x, y, side)
+  local self_name = "LIGHT_VEHICLE"
+  Entity.init(self, self_name, x, y, side)
   -- init data ---------------------------------
     self.image_name = "LV.png"
   self.is_dead = false
@@ -20,11 +21,12 @@ function LightVehicle:init(x, y, side)
   self.attack_value = 15
 
   -- init default values -----------------------
-  self.hp = COMBAT_DEFAULTS.LIGHT_VEHICLE.HP
-  self.move = COMBAT_DEFAULTS.LIGHT_VEHICLE.MOVE
-  self.attack_range = COMBAT_DEFAULTS.LIGHT_VEHICLE.ATTACKING.ATTACK_RANGE
-  self.attack_amp = COMBAT_DEFAULTS.LIGHT_VEHICLE.ATTACKING
-  self.defend_amp = COMBAT_DEFAULTS.LIGHT_VEHICLE.DEFENDING
+  self.cost = COMBAT_DEFAULTS[self_name].COST
+  self.hp = COMBAT_DEFAULTS[self_name].HP
+  self.move = COMBAT_DEFAULTS[self_name].MOVE
+  self.attack_range = COMBAT_DEFAULTS[self_name].ATTACKING.ATTACK_RANGE
+  self.attack_amp = COMBAT_DEFAULTS[self_name].ATTACKING
+  self.defend_amp = COMBAT_DEFAULTS[self_name].DEFENDING
 end
 
 function LightVehicle:update(dt)

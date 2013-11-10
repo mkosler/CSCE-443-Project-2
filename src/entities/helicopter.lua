@@ -12,7 +12,8 @@ local Helicopter = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function Helicopter:init(x, y, side)
-  Entity.init(self, "HELICOPTER", x, y, side)
+  local self_name = "HELICOPTER"
+  Entity.init(self, self_name, x, y, side)
   self.image_name = "heli.png"
   
   -- init data ---------------------------------
@@ -21,11 +22,12 @@ function Helicopter:init(x, y, side)
   self.attack_value = 15
 
   -- init default values -----------------------
-  self.hp = COMBAT_DEFAULTS.HELICOPTER.HP
-  self.move = COMBAT_DEFAULTS.HELICOPTER.MOVE
-  self.attack_range = COMBAT_DEFAULTS.HELICOPTER.ATTACKING.ATTACK_RANGE
-  self.attack_amp = COMBAT_DEFAULTS.HELICOPTER.ATTACKING
-  self.defend_amp = COMBAT_DEFAULTS.HELICOPTER.DEFENDING
+  self.cost = COMBAT_DEFAULTS[self_name].COST
+  self.hp = COMBAT_DEFAULTS[self_name].HP
+  self.move = COMBAT_DEFAULTS[self_name].MOVE
+  self.attack_range = COMBAT_DEFAULTS[self_name].ATTACKING.ATTACK_RANGE
+  self.attack_amp = COMBAT_DEFAULTS[self_name].ATTACKING
+  self.defend_amp = COMBAT_DEFAULTS[self_name].DEFENDING
 end
 
 function Helicopter:update(dt)

@@ -12,7 +12,8 @@ local HeavyInfantry = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function HeavyInfantry:init(x, y, side)
-  Entity.init(self, "HEAVY_INFANTRY", x, y, side)
+  local self_name = "HEAVY_INFANTRY"
+  Entity.init(self, self_name, x, y, side)
   -- init data ---------------------------------
     self.image_name = "HI.png"
   self.is_dead = false
@@ -20,11 +21,12 @@ function HeavyInfantry:init(x, y, side)
   self.attack_value = 15
 
   -- init default values -----------------------
-  self.hp = COMBAT_DEFAULTS.HEAVY_INFANTRY.HP
-  self.move = COMBAT_DEFAULTS.HEAVY_INFANTRY.MOVE
-  self.attack_range = COMBAT_DEFAULTS.HEAVY_INFANTRY.ATTACKING.ATTACK_RANGE
-  self.attack_amp = COMBAT_DEFAULTS.HEAVY_INFANTRY.ATTACKING
-  self.defend_amp = COMBAT_DEFAULTS.HEAVY_INFANTRY.DEFENDING
+  self.cost = COMBAT_DEFAULTS[self_name].COST
+  self.hp = COMBAT_DEFAULTS[self_name].HP
+  self.move = COMBAT_DEFAULTS[self_name].MOVE
+  self.attack_range = COMBAT_DEFAULTS[self_name].ATTACKING.ATTACK_RANGE
+  self.attack_amp = COMBAT_DEFAULTS[self_name].ATTACKING
+  self.defend_amp = COMBAT_DEFAULTS[self_name].DEFENDING
 end
 
 function HeavyInfantry:update(dt)
