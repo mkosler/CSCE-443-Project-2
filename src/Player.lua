@@ -32,15 +32,25 @@ function Player:init(player_id)
   self.units = {}
   -- Player ID
   self.id = player_id
+  self.create_testing_units()
 end 
 
 function Player:add_unit(unit_name, x, y)
-    unit_lib[unit_name](x, y, self.id)
+    unit = unit_lib[unit_name](x, y, self.id)
     table.insert(self.units, unit)
 end
 
 function Player:remove_unit(id)
     -- body
+end
+
+function create_testing_units()
+    self:add_unit("Helicopter", 1, 1)
+    self:add_unit("LightInfantry", 2, 1)
+    self:add_unit("HeavyInfantry", 2, 2)
+    self:add_unit("LightVehicle", 2, 3)
+    self:add_unit("HeavyVehicle", 3, 3)
+    self:add_unit("Commander", 4, 4)
 end
 
 return Player
