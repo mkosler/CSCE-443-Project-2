@@ -1,4 +1,4 @@
-local CombatGUI = require( "src.GUI.Combat.CombatGUI" )
+ local CombatGUI = require( "src.GUI.Combat.CombatGUI" )
 local Combat = {}
 
 function Combat:init()
@@ -33,8 +33,8 @@ function Combat:update_hp()
     local defender_amp = self:get_def_amp()
 
     self.dmg = { 
-      atk_dmg = self:cal_dmg(self.attacker.attack_value, attacker_amp),
-      def_dmg = self:cal_dmg(self.defender.attack_value, defender_amp)
+      atk_dmg = self:cal_attack_dmg(attacker_amp),
+      def_dmg = self:cal_defend_dmg(defender_amp)
     }
 
     if self.dmg.atk_dmg > self.defender.hp then 
@@ -63,18 +63,29 @@ function Combat:get_def_amp()
     return self.defender.defend_amp[self.attacker.name]
 end
 
-function Combat:cal_dmg(value, amp)
-    -- consider critical damage
+function Combat:cal_attack_dmg(amp)
     if math.random() > 0.66 then 
-        self.dmg_crit = true
-    else 
-        self.dmg_crit = false
+		self.attack_dmg_crit = true
+	else 
+		self.attack_dmg_crit = false
+		
+	if self.attack_dmg_crit then 
+		return self.attacker.attack_value*amp*(1.3 + 0.1 * math.random(1, 4))
+	else 
+        return self.attacker.attack_value*amp*(0.8 + 0.1 * math.random(1, 4))
     end 
+end 
 
-    if self.dmg_crit then 
-        return value*amp*(1.3 + 0.1 * math.random(1, 4))
-    else 
-        return value*amp*(0.8 + 0.1 * math.random(1, 4))
+function Combat:cal_defend_dmg(amp)
+    if math.random() > 0.66 then 
+		self.defend_dmg_crit = true
+	else 
+		self.defend_dmg_crit = false
+		
+	if self.defend_dmg_crit then 
+		return self.defender.attack_value*amp*(1.3 + 0.1 * math.random(1, 4))
+	else 
+        return self.defender.attack_value*amp*(0.8 + 0.1 * math.random(1, 4))
     end 
 end 
 
