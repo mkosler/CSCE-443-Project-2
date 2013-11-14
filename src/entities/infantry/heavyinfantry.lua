@@ -1,24 +1,27 @@
+------------------------------------------------------------------------
+-- Requires ------------------------------------------------------------
+------------------------------------------------------------------------
 local Class = require 'lib.class'
 local Entity = require 'src.entities.entity'
+local COMBAT_DEFAULTS = require 'combat'
 
 local HeavyInfantry = Class{ __includes = Entity }
 
+------------------------------------------------------------------------
+-- Functions -----------------------------------------------------------
+------------------------------------------------------------------------
+
 function HeavyInfantry:init(x, y, side)
   Entity.init(self, "HeavyInfantry", x, y, side)
-  -- init control 
-  self.flags = { 
-    left = false,
-    right = false, 
-    up = false, 
-    down = false
-  }
-  -- init data 
+  -- init data ---------------------------------
   self.is_dead = false
   self.is_moved = false
   self.attack_value = 15
-  self.attack_range = COMBAT_DEFAULTS.HEAVY_INFANTRY.ATTACKING.ATTACK_RANGE
-  self.id = COMBAT_DEFAULTS.HEAVY_INFANTRY.ID
+
+  -- init default values -----------------------
   self.hp = COMBAT_DEFAULTS.HEAVY_INFANTRY.HP
+  self.move = COMBAT_DEFAULTS.HEAVY_INFANTRY.MOVE
+  self.attack_range = COMBAT_DEFAULTS.HEAVY_INFANTRY.ATTACKING.ATTACK_RANGE
   self.attack_amp = COMBAT_DEFAULTS.HEAVY_INFANTRY.ATTACKING
   self.defend_amp = COMBAT_DEFAULTS.HEAVY_INFANTRY.DEFENDING
 end

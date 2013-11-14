@@ -1,24 +1,27 @@
+------------------------------------------------------------------------
+-- Requires ------------------------------------------------------------
+------------------------------------------------------------------------
 local Class = require 'lib.class'
 local Entity = require 'src.entities.entity'
+local COMBAT_DEFAULTS = require 'combat'
 
 local Commander = Class{ __includes = Entity }
 
+------------------------------------------------------------------------
+-- Functions -----------------------------------------------------------
+------------------------------------------------------------------------
+
 function Commander:init(x, y, side)
   Entity.init(self, "Commander", x, y, side)
-  -- init control 
-  self.flags = { 
-    left = false,
-    right = false, 
-    up = false, 
-    down = false
-  }
-  -- init data  
+    -- init data ---------------------------------
   self.is_dead = false
   self.is_moved = false
   self.attack_value = 15
-  self.attack_range = COMBAT_DEFAULTS.COMMANDER.ATTACKING.ATTACK_RANGE
-  self.id = COMBAT_DEFAULTS.COMMANDER.ID
+
+  -- init default values -----------------------
   self.hp = COMBAT_DEFAULTS.COMMANDER.HP
+  self.move = COMBAT_DEFAULTS.COMMANDER.MOVE
+  self.attack_range = COMBAT_DEFAULTS.COMMANDER.ATTACKING.ATTACK_RANGE
   self.attack_amp = COMBAT_DEFAULTS.COMMANDER.ATTACKING
   self.defend_amp = COMBAT_DEFAULTS.COMMANDER.DEFENDING
 end

@@ -14,7 +14,7 @@ end
 -- be any memory issues
 function Graph:createNode(o)
   self._nodes[o] = {
-    _parent = nil,
+    _path = {},
     _depth = 0,
     neighbors = setmetatable({}, { __mode = 'v' }),
     _creator = o,
@@ -59,17 +59,6 @@ function Graph:delete(x, y)
   end
 end
 
-local function buildPath(o)
-  local path = { o._creator }
-
-  while o._parent ~= o do
-    o = o._parent
-    table.insert(path, 1, o._creator)
-  end
-
-  return path
-end
-
 local function search(t, o)
   for _,v in pairs(t) do
     if v == o then return true end
@@ -78,45 +67,59 @@ local function search(t, o)
   return false
 end
 
+local function shallow(t)
+  local nt = {}
+  for k,v in pairs(t) do
+    nt[k] = v
+  end
+  return nt
+end
+
 --- Finds all paths of a given length (depth) emanating from a given creator node
 -- @param o The creator node from which the paths emanate
 -- @param depth The maximum length (depth) of the paths
 -- @returns A set of creator node paths of the given length
 function Graph:findPaths(o, depth)
   for _,v in pairs(self._nodes) do
-    v._parent = nil
+    v._path = {}
     v._depth = 0
   end
 
   local queue = {}
   local set = {}
-  local exits = {}
 
-  self._nodes[o]._parent = self._nodes[o]
+  self._nodes[o]._path = { o }
   table.insert(queue, 1, self._nodes[o])
   table.insert(set, self._nodes[o])
 
+  local paths = {}
   while #queue > 0 do
     local t = table.remove(queue)
 
-    if t._depth == depth then
-      table.insert(exits, t)
-    else
+    if t._depth ~= depth then
       for _,u in pairs(t.neighbors) do
         local neighbor = self._nodes[u]
+
         if not search(set, neighbor) then
-          neighbor._parent = t
+          -- Build the new path from the parent path
+          local p = shallow(t._path)
+          table.insert(p, u)
+
+          -- Set the new path
+          neighbor._path = p
+
+          -- Add the path to the collection
+          table.insert(paths, p)
+
+          -- Set the depth
           neighbor._depth = t._depth + 1
+
+          -- Add it to the set and queue
           table.insert(set, neighbor)
           table.insert(queue, 1, neighbor)
         end
       end
     end
-  end
-
-  local paths = {}
-  for _,exit in ipairs(exits) do
-    table.insert(paths, buildPath(exit))
   end
 
   if #paths == 0 then
