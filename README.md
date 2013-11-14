@@ -153,6 +153,10 @@ as terrain types. This should lend to a simplistic sytle while still being able 
 * **Mountain/Water**: impassible except for flying;
 * **Amplifier**: Increase attack while lowering defense;
 
+### SMF Specification
+
+SIGINT Map File (.smf) contains a space delimited file of two character pairs. The first character identifies the terrain type (PFMA) and the second character is a hexadecimal number indicating the connections the given node has with nodes in cardinal directions, i.e. C = NESW. For example, a node with connections in all four cardinal directions will have the number F, since F = 1111; a node with connections two nodes horizontal to it would be 5 = 0101.
+
 ## Win State
  
 One side has lost the battle if:
