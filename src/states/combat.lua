@@ -31,10 +31,14 @@ end
 function Combat:update_hp()
     local attacker_amp = self:get_atk_amp()
     local defender_amp = self:get_def_amp()
+	
+	
+	local atk_terrain_amp = self:get_terrain_amp()
+	local def_terrain_amp = self:get_terrain_amp()
 
     self.dmg = { 
-      atk_dmg = self:cal_attack_dmg(attacker_amp),
-      def_dmg = self:cal_defend_dmg(defender_amp)
+      atk_dmg = self:cal_attack_dmg(attacker_amp, atk_terrain_amp),
+      def_dmg = self:cal_defend_dmg(defender_amp, def_terrain_amp)
     }
 
     if self.dmg.atk_dmg > self.defender.hp then 
@@ -55,6 +59,10 @@ function Combat:update_hp()
     end 
 end
 
+function Combat:get_terrain_amp()
+    -- return the terrain amplifier where the unit position
+end
+
 function Combat:get_atk_amp()
     return self.attacker.attack_amp[self.defender.name]
 end
@@ -63,7 +71,7 @@ function Combat:get_def_amp()
     return self.defender.defend_amp[self.attacker.name]
 end
 
-function Combat:cal_attack_dmg(amp)
+function Combat:cal_attack_dmg(amp, terrain_amp)
     if math.random() > 0.66 then 
 		self.attack_dmg_crit = true
 	else 
@@ -76,7 +84,7 @@ function Combat:cal_attack_dmg(amp)
     end 
 end 
 
-function Combat:cal_defend_dmg(amp)
+function Combat:cal_defend_dmg(amp, terrain_amp)
     if math.random() > 0.66 then 
 		self.defend_dmg_crit = true
 	else 
