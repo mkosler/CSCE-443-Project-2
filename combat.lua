@@ -5,7 +5,6 @@ return {
     img = "light_infantry.png", 
     HP = 100,
     MOVE = 6,
-    COST = 5, 
     ATTACKING = {
       ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
@@ -28,7 +27,6 @@ return {
     img = "heavy_infantry.png",
     HP = 100,
     MOVE = 4,
-    COST = 8,
     ATTACKING = {
       ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
@@ -51,7 +49,6 @@ return {
     img = "light_vehicle.png",
     HP = 100,
     MOVE = 6,
-    COST = 7, 
     ATTACKING = {
       ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
@@ -74,7 +71,6 @@ return {
     img = "heavy_vehicle.png",
     HP = 100,
     MOVE = 4,
-    COST = 10,
     ATTACKING = {
       ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 1,
@@ -97,7 +93,6 @@ return {
     img = "helicopter.png", 
     HP = 100,
     MOVE = 6,
-    COST = 15,
     ATTACKING = {
       ATTACK_RANGE   = 1,
       LIGHT_INFANTRY = 0.5,
@@ -138,4 +133,6 @@ return {
       COMMANDER      = 0,
     },
   },
+  
+  
 }

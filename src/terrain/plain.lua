@@ -4,6 +4,7 @@
 
 local Class = require 'lib.class'
 local Tile = require 'src.terrain.tile'
+local TERRAIN = require 'terrain'
 
 ------------------------------------------------------------------------
 -- Functions -----------------------------------------------------------
@@ -18,6 +19,13 @@ local Plain = Class{ __includes = Tile }
 -- @param column Column of the tile
 function Plain:init(x, y, row, column)
   Tile.init(self, "Plain", x, y, row, column)
+  local name = "PLAIN"
+  
+  self.attack      = TERRAIN[name].ATTACK
+  self.defend      = TERRAIN[name].DEFEND
+  self.move        = TERRAIN[name].MOVE
+  self.is_passible = TERRAIN[name].PASSIBLE
+  
 end
 
 --- Get the movement speed modifier of the tile
