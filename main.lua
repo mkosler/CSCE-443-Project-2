@@ -8,6 +8,8 @@ require('lib.LUBE.LUBE')
 local Gamestate = require 'lib.gamestate'
 Title = require 'src.states.title'
 Battle = require 'src.states.battle'
+local Loader = require 'src.loader'
+
 ------------------------------------------------------------------------
 -- GAMESTATES ----------------------------------------------------------
 ------------------------------------------------------------------------
@@ -20,6 +22,8 @@ local Title = require 'src.states.title'
 
 --- Called after LOVE modules loaded
 function love.load()
+  local tiles = Loader.load('assets/test.smf', 3, 3)
+
     Gamestate.registerEvents()
     Gamestate.switch(Title)
 end

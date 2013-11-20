@@ -24,6 +24,8 @@ function Tile:init(name, x, y, row, column)
   self.y = y
   self.row = row
   self.column = column
+
+  self.connections = {}
 end
 
 --- Draw the tile
