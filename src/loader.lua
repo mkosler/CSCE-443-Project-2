@@ -1,9 +1,22 @@
+---------------------------------------------------------------
+-- Requires ---------------------------------------------------
+---------------------------------------------------------------
+
 local bit32 = require 'lib.numberlua'.bit32
 local Plain = require 'src.terrain.plain'
 local Forest = require 'src.terrain.forest'
 local Mountain = require 'src.terrain.mountain'
 local Amplifier = require 'src.terrain.amplifier'
 
+---------------------------------------------------------------
+-- Private Functions ------------------------------------------
+---------------------------------------------------------------
+
+--- Tile creation factory method
+-- @param terrain The terrain character
+-- @param row The row of the tile
+-- @param column The column of the tile
+-- @returns The specific tile type
 local function createTile(terrain, row, column)
   terrain = string.lower(terrain)
 
@@ -20,6 +33,10 @@ local function createTile(terrain, row, column)
   end
 end
 
+--- Set the connections table
+-- @param tile The tile to modify
+-- @param hex The hex value signifying the connections
+-- @returns The modified tile
 local function setConnections(tile, hex)
   if bit32.band(hex, 8) == 8 then
     tile.connections[0] = true
@@ -40,6 +57,10 @@ local function setConnections(tile, hex)
   return tile
 end
 
+--- Creates an empty 2d array
+-- @param rows The number of rows
+-- @param columns The number of columns
+-- @returns The empty 2d array, represented coordinate-wise as opposed to matrix-wise
 local function createTileMap(rows, columns)
   local tiles = {}
 
@@ -53,6 +74,15 @@ local function createTileMap(rows, columns)
   return tiles
 end
 
+---------------------------------------------------------------
+-- Public Interface -------------------------------------------
+---------------------------------------------------------------
+
+--- Loads a given filename into a 2d array of tiles
+-- @param filename The path to the file to be read
+-- @param rows The number of rows (defaults to 30)
+-- @param columns The number of columns (defaults to 15)
+-- @returns The 2d array of tiles
 local function load(filename, rows, columns)
   assert(type(filename) == 'string', 'Filename must be a string')
 
@@ -66,16 +96,10 @@ local function load(filename, rows, columns)
   for t, c in f:gmatch('(%a)(%x)') do
     c = tonumber(c, 16)
 
-    local lc = n % columns
-    local lr = math.floor(n / columns)
+    local x = n % columns
+    local y = math.floor(n / columns)
 
-    tiles[lc][lr] = setConnections(createTile(t, lr, lc), c)
-    print(lc, lr)
-    print(tiles[lc][lr])
-    for i = 0, #tiles[lc][lr].connections do
-      print(i, tiles[lc][lr].connections[i] and 'true' or 'false')
-    end
-    print()
+    tiles[x][y] = setConnections(createTile(t, x, y), c)
 
     n = n + 1
   end
@@ -83,18 +107,53 @@ local function load(filename, rows, columns)
   return tiles
 end
 
-local function pprint(tiles)
-  for x = 0, 29 do
-    for y = 0, 14 do
-      print(x, y)
+--- Prints a .smf file based on a given 2d array of tiles
+-- @param tiles The 2d array of tiles
+-- @param filename The path to the .smf file
+-- @param rows The number of rows (defaults to 30)
+-- @param columns The number of columns (defaults to 15)
+local function toFile(tiles, filename, rows, columns)
+  assert(type(tiles) == 'table', 'Tiles parameter must be a table')
+  assert(type(filename) == 'string', 'Filename parameter must be a string')
+
+  local f = io.open(filename, 'w')
+
+  rows = rows or 30
+  columns = columns or 15
+
+  for x = 0, columns - 1 do
+    for y = 0, rows - 1 do
       local t = tiles[x][y]
-      print(t.name)
-      print('{' .. table.concat(t.connections, ', ') ..'}')
+
+      local connections = 0
+      if t.connections[0] then
+        connections = connections + 8
+      end
+
+      if t.connections[1] then
+        connections = connections + 4
+      end
+
+      if t.connections[2] then
+        connections = connections + 2
+      end
+
+      if t.connections[3] then
+        connections = connections + 1
+      end
+
+      local terrain = string.upper(t.name:sub(1, 1))
+
+      f:write(string.format('%s%X ', terrain, connections))
     end
+
+    f:write('\n')
   end
+
+  f:close()
 end
 
 return {
   load = load,
-  pprint = pprint,
+  toFile = toFile,
 }
