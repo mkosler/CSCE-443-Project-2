@@ -4,13 +4,17 @@ local Combat = {}
 function Combat:init()
 end
 
-function Combat:enter(previous, attacker, defender)
+function Combat:enter(previous, attacker, defender, atk_terrain, def_terrain)
     loveframes.SetState("Combat")
     if Combat.master ~= nil then 
         Combat.master:Remove()
     end
-    self.attacker = attacker
-    self.defender = defender
+    
+    self.attacker       = attacker
+    self.defender       = defender
+    self.atk_terrain    = atk_terrain
+    self.def_terrain    = def_terrain
+
     self.count = 0
     if self.attacker.x < self.defender.x then
         self.left = attacker
@@ -33,8 +37,8 @@ function Combat:update_hp()
     local defender_amp = self:get_def_amp()
 	
 	
-	local atk_terrain_amp = self:get_terrain_amp()
-	local def_terrain_amp = self:get_terrain_amp()
+	local atk_terrain_amp = self:get_atk_terrain_amp()
+	local def_terrain_amp = self:get_def_terrain_amp()
 
     self.dmg = { 
       atk_dmg = self:cal_attack_dmg(attacker_amp, atk_terrain_amp),
@@ -59,8 +63,13 @@ function Combat:update_hp()
     end 
 end
 
-function Combat:get_terrain_amp()
-    -- return the terrain amplifier where the unit position
+function Combat:get_atk_terrain_amp()
+    -- return the attacker's terrain amplifier 
+    return self.atk_terrain.attack
+end
+
+function Combat:get_def_terrain_amp( ... )
+    return self.def_terrain.defend
 end
 
 function Combat:get_atk_amp()
@@ -78,9 +87,9 @@ function Combat:cal_attack_dmg(amp, terrain_amp)
 		self.attack_dmg_crit = false
 		
 	if self.attack_dmg_crit then 
-		return self.attacker.attack_value*amp*(1.3 + 0.1 * math.random(1, 4))
+		return self.attacker.attack_value*amp*terrain_amp*(1.3 + 0.1 * math.random(1, 4))
 	else 
-        return self.attacker.attack_value*amp*(0.8 + 0.1 * math.random(1, 4))
+        return self.attacker.attack_value*amp*terrain_amp*(0.8 + 0.1 * math.random(1, 4))
     end 
 end 
 
@@ -91,9 +100,9 @@ function Combat:cal_defend_dmg(amp, terrain_amp)
 		self.defend_dmg_crit = false
 		
 	if self.defend_dmg_crit then 
-		return self.defender.attack_value*amp*(1.3 + 0.1 * math.random(1, 4))
+		return self.defender.attack_value*amp*terrain_amp*(1.3 + 0.1 * math.random(1, 4))
 	else 
-        return self.defender.attack_value*amp*(0.8 + 0.1 * math.random(1, 4))
+        return self.defender.attack_value*amp*terrain_amp*(0.8 + 0.1 * math.random(1, 4))
     end 
 end 
 
