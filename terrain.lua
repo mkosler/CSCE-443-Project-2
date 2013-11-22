@@ -21,9 +21,51 @@ return {
 	PASSIBLE = false,
   },
   AMPLIFIER = {
+    img = {
+      big_thick         = 'Ampilfier_big_thick.png', 
+      big               = 'Ampilfier_big.png',
+      small_thicker     = 'Ampilfier_small_thick.png',
+      small             = 'Ampilfier_small.png',
+    },
     ATTACK = 2,
 	DEFEND = .5,
 	MOVE = 0,
+    PASSIBLE = true,
+  },
+  BATTERY = {
+    img = {
+      big_thick         = 'Battery_big_thicker.png',
+      big               = 'Battery_big.png',
+      small_thicker     = 'Battery_small_thick.png',
+      small             = 'Battery_small.png'
+    },
+    ATTACK = 1,
+    DEFEND = 1,
+    MOVE = 0,
+    PASSIBLE = true,
+  },
+  GROUND = {
+    img = {
+      big_thick         = 'Ground_big_thick.png',
+      big               = 'Ground_big.png',
+      small_thicker     = 'Ground_small_thicker.png',
+      small             = 'Ground_small.png',
+    },
+    ATTACK = 1,
+    DEFEND = 1,
+    MOVE = 0,
+    PASSIBLE = true,
+  },
+  RESISTOR = {
+    img = {
+      big_thick         = 'Resistor_big_thick.png',
+      big               = 'Resistor_big.png',
+      small_thicker     = 'Resistor_small_thicker.png',
+      small             = 'Resistor_small.png',
+    },
+    ATTACK = 1,
+    DEFEND = 1,
+    MOVE = 0,
     PASSIBLE = true,
   },
 }
