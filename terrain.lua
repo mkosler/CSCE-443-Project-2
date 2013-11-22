@@ -21,7 +21,7 @@ return {
 	PASSIBLE = false,
   },
   AMPLIFIER = {
-    img = {
+    IMG = {
       big_thick         = 'Ampilfier_big_thick.png', 
       big               = 'Ampilfier_big.png',
       small_thicker     = 'Ampilfier_small_thick.png',
@@ -33,7 +33,7 @@ return {
     PASSIBLE = true,
   },
   BATTERY = {
-    img = {
+    IMG = {
       big_thick         = 'Battery_big_thicker.png',
       big               = 'Battery_big.png',
       small_thicker     = 'Battery_small_thick.png',
@@ -45,7 +45,7 @@ return {
     PASSIBLE = true,
   },
   GROUND = {
-    img = {
+    IMG = {
       big_thick         = 'Ground_big_thick.png',
       big               = 'Ground_big.png',
       small_thicker     = 'Ground_small_thicker.png',
@@ -57,7 +57,7 @@ return {
     PASSIBLE = true,
   },
   RESISTOR = {
-    img = {
+    IMG = {
       big_thick         = 'Resistor_big_thick.png',
       big               = 'Resistor_big.png',
       small_thicker     = 'Resistor_small_thicker.png',
