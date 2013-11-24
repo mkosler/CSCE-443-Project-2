@@ -22,6 +22,7 @@ function Helicopter:init(x, y, side)
   self.attack_value = 15
 
   -- init default values -----------------------
+  self.description = COMBAT_DEFAULTS[self_name].des
   self.cost = COMBAT_DEFAULTS[self_name].COST
   self.hp = COMBAT_DEFAULTS[self_name].HP
   self.move = COMBAT_DEFAULTS[self_name].MOVE
