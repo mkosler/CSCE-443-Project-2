@@ -1,5 +1,7 @@
 local Class = require 'lib.class'
 local event = require( "src.GUI.General.event" )
+local lube = require( "lib.LUBE.LUBE" )
+
 
 local events = {}
 local SELECT_TILE = Class{ __includes = event }
@@ -21,6 +23,22 @@ function SELECT_TILE:act( State, dt )
         SELECT_TILE.selected_tile = self.selected
     end
     return {HIGHLIGHT_MOVEMENT(self.selected), HIGHLIGHT_ATTACK(self.selected)}
+end
+
+function SELECT_TILE:to_net()
+    local msg = {
+        name = self.name,
+        tile1x = self.tile1.x,
+        tile1y = self.tile1.y,
+    }
+    return lube.bin:pack( msg )
+end
+
+function SELECT_TILE.from_net( msg, State )
+    local tile1x = msg.tile1x
+    local tile1y = msg.tile1y
+    local selected = State.map.tiles[tile1x][tile1y]
+    return SELECT_TILE( selected )
 end
 
 events.SELECT_TILE = SELECT_TILE
@@ -168,7 +186,6 @@ end
 
 function MOVED_UNIT:init( unit, to_tile )
     event.init( self, "MOVED_UNIT" )
-    print( tostring(unit) )
     self.unit = unit
     self.to_tile = to_tile
 end
@@ -229,6 +246,27 @@ function INTERACT_WITH:act( State, dt )
     return return_events
 end
 
+function INTERACT_WITH:to_net()
+    local msg = {
+        name = self.name,
+        tile1x = self.tile1.x,
+        tile1y = self.tile1.y,
+        tile2x = self.tile2.x,
+        tile2y = self.tile2.y,
+    }
+    return lube.bin:pack( msg )
+end
+
+function INTERACT_WITH.from_net( msg, State )
+    local tile1x = msg.tile1x
+    local tile1y = msg.tile1y
+    local tile2x = msg.tile2x
+    local tile2y = msg.tile2y
+    local tile1 = State.map.tiles[tile1x][tile1y]
+    local tile2 = State.map.tiles[tile2x][tile2y]
+    return INTERACT_WITH( tile1, tile2 )
+end
+
 events.INTERACT_WITH = INTERACT_WITH
 
 -- End Turn --
@@ -253,6 +291,17 @@ function END_TURN:act( State, dt )
     return {}
 end
 
+function END_TURN:to_net()
+     local msg = {
+        name = self.name,
+    }
+    return lube.bin:pack(msg)
+end
+
+function END_TURN.from_net(msg, State)
+    return END_TURN()
+end
+
 events.END_TURN = END_TURN
 
 local EXIT_BATTLE_MAP = Class{ __includes = event }
@@ -264,6 +313,17 @@ end
 function EXIT_BATTLE_MAP:act( State, dt )
     Gamestate.switch(Title)
     return {}
+end
+
+function EXIT_BATTLE_MAP:to_net()
+    local msg = {
+        name = self.name,
+    }
+    return lube.bin:pack(msg)
+end
+
+function EXIT_BATTLE_MAP.from_net(msg, State)
+    return EXIT_BATTLE_MAP()
 end
 
 events.EXIT_BATTLE_MAP = EXIT_BATTLE_MAP

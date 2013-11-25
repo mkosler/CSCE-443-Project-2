@@ -52,6 +52,10 @@ end
 function BattleGUI.update( State, dt )
     State.map.turn = State.turn
     new_events = BattleGUI.event_queue:poll()
+    if State.network ~= nil then
+        State.network:send_queue( new_events, State.turn )
+        State.network:update( BATTLE_GUI_EVENTS, State, new_events, dt )
+    end
     --print( str_dict( new_events, 0 ) )
     while #new_events > 0 do
         event = table.remove( new_events, 1 )

@@ -6,7 +6,6 @@ local BattleGUI = require( "src.GUI.Battle.BattleGUI" )
 -- Functions -----------------------------------------------------------
 ------------------------------------------------------------------------
 
-
 local Battle = {}
 
 function Battle.create_test_map()
@@ -44,11 +43,12 @@ end
 --- Set up state once entered
 -- Called after every Gamestate.switch()
 -- @param previous The previous gamestate
-function Battle:enter(previous, reset)
+function Battle:enter(previous, reset, network)
     if reset then
         if Battle.master ~= nil then
             Battle.master:Remove()
         end
+        Battle.network = network
         Battle.master = nil
         Battle.game_master = nil
         Battle.map = nil

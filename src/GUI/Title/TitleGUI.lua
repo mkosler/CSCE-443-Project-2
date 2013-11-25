@@ -13,12 +13,20 @@ function TitleGUI.start_local_game( object, x, y )
     TitleGUI.event_queue:push( TITLE_GUI_EVENTS.START_LOCAL_BATTLE() )
 end
 
+function TitleGUI.start_local_server( object, x, y )
+    TitleGUI.event_queue:push( TITLE_GUI_EVENTS.START_LOCAL_SERVER() )
+end
+
+function TitleGUI.connect_to_server( object, x, y )
+    TitleGUI.event_queue:push( TITLE_GUI_EVENTS.CONNECT_TO_SERVER() )
+end
+
 TitleGUI.skin_name = "default"
 TitleGUI.skin = loveframes.skins.Get("default")
 TitleGUI.font = love.graphics.newFont("assets/GUI/Fonts/Terminus.ttf", 40 )
 TitleGUI.title_font = love.graphics.newFont("assets/GUI/Fonts/Terminus.ttf", 100 )
-TitleGUI.menu_buttons = { "Start Local Game", "Quit" }
-TitleGUI.menu_button_callbacks = { TitleGUI.start_local_game, TitleGUI.quit }
+TitleGUI.menu_buttons = { "Start Local Game", "Start Local Server", "Connect to Server", "Quit" }
+TitleGUI.menu_button_callbacks = { TitleGUI.start_local_game,  TitleGUI.start_local_server, TitleGUI.connect_to_server, TitleGUI.quit }
 TitleGUI.text_color = { 0, 192, 0, 255 }
 
 
@@ -72,6 +80,7 @@ function TitleGUI.create_menu( Title_State )
     local button_list = create_button_list( TitleGUI.make_menu_buttons( Title_State, list_box:GetWidth() ), TitleGUI.skin_name )
     button_list:SetParent( list_box )
     button_list:SetWidth( list_box:GetWidth() )
+    button_list:SetHeight( list_box:GetHeight() ) 
     button_list:Center()
     
     Title_State.menu_display = menu_display

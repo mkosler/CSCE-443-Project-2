@@ -148,6 +148,7 @@ UnitTest("Client recv callback", function()
 end)
 
 UnitTest("Server connect callback", function()
+
 	local server = lube.testServer()
 	server.handshake = "handshake"
 	server:listen(9797)
@@ -158,7 +159,6 @@ UnitTest("Server connect callback", function()
 		called = true
 		assert(id == clientid)
 	end
-
 	server.received = { data = server.handshake .. "+\n", clientid = clientid }
 	server:update(5)
 
