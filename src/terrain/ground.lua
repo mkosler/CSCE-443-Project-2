@@ -10,36 +10,38 @@ local TERRAIN = require 'terrain'
 -- Functions -----------------------------------------------------------
 ------------------------------------------------------------------------
 
-local Mountain = Class{ __includes = Tile }
+local Ground = Class{ __includes = Tile }
 
 --- Constructor
 -- @param x X-coordinate of the tile
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile
 -- @param column Column of the tile
-function Mountain:init(x, y, row, column)
-  Tile.init(self, "Mountain", x, y, row, column)
-  local name = "MOUNTAIN"
-  
+function Ground:init(x, y, row, column)
+  Tile.init(self, "Ground", x, y, row, column)
+  local name = "GROUND"
+
+  self.img         = TERRAIN[name].IMG
   self.attack      = TERRAIN[name].ATTACK
   self.defend      = TERRAIN[name].DEFEND
   self.move        = TERRAIN[name].MOVE
   self.is_passible = TERRAIN[name].PASSIBLE
+  
 end
 
 --- Get the movement speed modifier of the tile
 -- @return The movement speed modifier of the tile
-function Mountain:getMovementModifier()
+function Ground:getMovementModifier()
 end
 
 --- Get the attack bonus modifier of the tile
 --@return The attack bonus modifier of the tile
-function Mountain:getAttackModifier()
+function Ground:getAttackModifier()
 end
 
 --- Get the defense bonus modifier of the tile
 --@return The defense bonus modifier of the tile
-function Mountain:getDefenseModifier()
+function Ground:getDefenseModifier()
 end
 
-return Mountain
+return Ground

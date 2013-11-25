@@ -12,7 +12,8 @@ local HeavyVehicle = Class{ __includes = Entity }
 ------------------------------------------------------------------------
 
 function HeavyVehicle:init(x, y, side)
-  Entity.init(self, "HEAVY_VEHICLE", x, y, side)
+  local self_name = "HEAVY_VEHICLE"
+  Entity.init(self, self_name, x, y, side)
   self.image_name = "HV.png"
   -- init data ---------------------------------
   self.is_dead = false
@@ -20,11 +21,13 @@ function HeavyVehicle:init(x, y, side)
   self.attack_value = 15
 
   -- init default values -----------------------
-  self.hp = COMBAT_DEFAULTS.HEAVY_VEHICLE.HP
-  self.move = COMBAT_DEFAULTS.HEAVY_VEHICLE.MOVE
-  self.attack_range = COMBAT_DEFAULTS.HEAVY_VEHICLE.ATTACKING.ATTACK_RANGE
-  self.attack_amp = COMBAT_DEFAULTS.HEAVY_VEHICLE.ATTACKING
-  self.defend_amp = COMBAT_DEFAULTS.HEAVY_VEHICLE.DEFENDING
+  self.description = COMBAT_DEFAULTS[self_name].des
+  self.cost = COMBAT_DEFAULTS[self_name].COST
+  self.hp = COMBAT_DEFAULTS[self_name].HP
+  self.move = COMBAT_DEFAULTS[self_name].MOVE
+  self.attack_range = COMBAT_DEFAULTS[self_name].ATTACKING.ATTACK_RANGE
+  self.attack_amp = COMBAT_DEFAULTS[self_name].ATTACKING
+  self.defend_amp = COMBAT_DEFAULTS[self_name].DEFENDING
 end
 
 function HeavyVehicle:update(dt)

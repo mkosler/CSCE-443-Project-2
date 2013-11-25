@@ -1,16 +1,20 @@
-local CombatGUI = require( "src.GUI.Combat.CombatGUI" )
+ local CombatGUI = require( "src.GUI.Combat.CombatGUI" )
 local Combat = {}
 
 function Combat:init()
 end
 
-function Combat:enter(previous, attacker, defender)
+function Combat:enter(previous, attacker, defender, atk_terrain, def_terrain)
     loveframes.SetState("Combat")
     if Combat.master ~= nil then 
         Combat.master:Remove()
     end
-    self.attacker = attacker
-    self.defender = defender
+    
+    self.attacker       = attacker
+    self.defender       = defender
+    self.atk_terrain    = atk_terrain
+    self.def_terrain    = def_terrain
+
     self.count = 0
     if self.attacker.x < self.defender.x then
         self.left = attacker
@@ -31,10 +35,14 @@ end
 function Combat:update_hp()
     local attacker_amp = self:get_atk_amp()
     local defender_amp = self:get_def_amp()
+	
+	
+	local atk_terrain_amp = self:get_atk_terrain_amp()
+	local def_terrain_amp = self:get_def_terrain_amp()
 
     self.dmg = { 
-      atk_dmg = self:cal_dmg(self.attacker.attack_value, attacker_amp),
-      def_dmg = self:cal_dmg(self.defender.attack_value, defender_amp)
+      atk_dmg = self:cal_attack_dmg(attacker_amp, atk_terrain_amp),
+      def_dmg = self:cal_defend_dmg(defender_amp, def_terrain_amp)
     }
 
     if self.dmg.atk_dmg > self.defender.hp then 
@@ -55,6 +63,15 @@ function Combat:update_hp()
     end 
 end
 
+function Combat:get_atk_terrain_amp()
+    -- return the attacker's terrain amplifier 
+    return self.atk_terrain.attack
+end
+
+function Combat:get_def_terrain_amp( ... )
+    return self.def_terrain.defend
+end
+
 function Combat:get_atk_amp()
     return self.attacker.attack_amp[self.defender.name]
 end
@@ -63,18 +80,29 @@ function Combat:get_def_amp()
     return self.defender.defend_amp[self.attacker.name]
 end
 
-function Combat:cal_dmg(value, amp)
-    -- consider critical damage
+function Combat:cal_attack_dmg(amp, terrain_amp)
     if math.random() > 0.66 then 
-        self.dmg_crit = true
-    else 
-        self.dmg_crit = false
+		self.attack_dmg_crit = true
+	else 
+		self.attack_dmg_crit = false
+		
+	if self.attack_dmg_crit then 
+		return self.attacker.attack_value*amp*terrain_amp*(1.3 + 0.1 * math.random(1, 4))
+	else 
+        return self.attacker.attack_value*amp*terrain_amp*(0.8 + 0.1 * math.random(1, 4))
     end 
+end 
 
-    if self.dmg_crit then 
-        return value*amp*(1.3 + 0.1 * math.random(1, 4))
-    else 
-        return value*amp*(0.8 + 0.1 * math.random(1, 4))
+function Combat:cal_defend_dmg(amp, terrain_amp)
+    if math.random() > 0.66 then 
+		self.defend_dmg_crit = true
+	else 
+		self.defend_dmg_crit = false
+		
+	if self.defend_dmg_crit then 
+		return self.defender.attack_value*amp*terrain_amp*(1.3 + 0.1 * math.random(1, 4))
+	else 
+        return self.defender.attack_value*amp*terrain_amp*(0.8 + 0.1 * math.random(1, 4))
     end 
 end 
 
