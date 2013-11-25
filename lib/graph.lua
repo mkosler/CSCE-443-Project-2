@@ -1,3 +1,4 @@
+
 local Graph = {}
 Graph.__index = Graph
 
@@ -90,33 +91,28 @@ function Graph:findPaths(o, depth)
 
   self._nodes[o]._path = { o }
   table.insert(queue, 1, self._nodes[o])
-  table.insert(set, self._nodes[o])
 
   local paths = {}
   while #queue > 0 do
-    local t = table.remove(queue)
-
-    if t._depth ~= depth then
+    local t = table.remove(queue, 1)
+    if t._depth <= depth then
+      table.insert( paths, t._path)
       for _,u in pairs(t.neighbors) do
         local neighbor = self._nodes[u]
+        -- Build the new path from the parent path
+        local p = shallow(t._path)
+        table.insert(p, u)
 
-        if not search(set, neighbor) then
-          -- Build the new path from the parent path
-          local p = shallow(t._path)
-          table.insert(p, u)
+        -- Set the new path
+        neighbor._path = p
 
-          -- Set the new path
-          neighbor._path = p
+        -- Set the depth
+        neighbor._depth = t._depth + 1
 
-          -- Add the path to the collection
-          table.insert(paths, p)
-
-          -- Set the depth
-          neighbor._depth = t._depth + 1
-
-          -- Add it to the set and queue
-          table.insert(set, neighbor)
-          table.insert(queue, 1, neighbor)
+        -- Add it to the queue
+        if not search( set, neighbor ) then
+            table.insert( set, neighbor )
+            table.insert(queue, neighbor)
         end
       end
     end

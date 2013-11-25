@@ -9,6 +9,8 @@ function Entity:init(name, x, y, side)
 
   self.x = x
   self.y = y
+  self.attacked = false
+  self.moved = false
 
   self.side = side
 
@@ -51,6 +53,10 @@ function Entity:draw(object)
         love.graphics.setColor(text_color)
         love.graphics.print(text, rx + width/2 - twidth/2, ry + height/2 - theight/2)
     end
+end
+
+function Entity:is_units_turn( State )
+    return self.side == State.turn%2
 end
 
 function Entity:__tostring()

@@ -1,12 +1,16 @@
+local TITLE_GUI_EVENTS = require( "src.GUI.Title.events")
+
 local TitleGUI = {}
+
+TitleGUI.event_queue = require( "src.GUI.General.event_queue" )
 
 -- Callback definitions
 function TitleGUI.quit( object, x, y )
-    object.cb_state._quit = true
+    TitleGUI.event_queue:push( TITLE_GUI_EVENTS.EXIT_PROGRAM() )
 end
 
 function TitleGUI.start_local_game( object, x, y )
-    object.cb_state._start_local_game = true
+    TitleGUI.event_queue:push( TITLE_GUI_EVENTS.START_LOCAL_BATTLE() )
 end
 
 TitleGUI.skin_name = "default"
@@ -16,6 +20,19 @@ TitleGUI.title_font = love.graphics.newFont("assets/GUI/Fonts/Terminus.ttf", 100
 TitleGUI.menu_buttons = { "Start Local Game", "Quit" }
 TitleGUI.menu_button_callbacks = { TitleGUI.start_local_game, TitleGUI.quit }
 TitleGUI.text_color = { 0, 192, 0, 255 }
+
+
+function TitleGUI.update( State, dt )
+    new_events = TitleGUI.event_queue:poll()
+    --print( str_dict( new_events, 0 ) )
+    while #new_events > 0 do
+        event = table.remove( new_events, 1 )
+        dispatched_events = event:act( State, dt )
+        for _, dispatch_event in pairs( dispatched_events ) do
+            table.insert( new_events, 1, dispatch_event )
+        end
+    end
+end
 
 function TitleGUI.createTitleGUI( Title_State )
     local master = create_panel( conf.screen.width, conf.screen.height, TitleGUI.skin_name )
@@ -66,7 +83,7 @@ function TitleGUI.make_menu_buttons( Title_State, width )
     local buttons = {}
     for i, button_text in ipairs(TitleGUI.menu_buttons) do
         local button = create_text_button( button_text, nil, nil, nil, nil, TitleGUI.skin_name )
-        button.OnClick = TitleGUI.menu_button_callbacks[i]
+        button.OnClick["l"] = TitleGUI.menu_button_callbacks[i]
         button.cb_state = Title_State
         button:SetWidth( width )
         button:SetHeight( 50 )

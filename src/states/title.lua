@@ -1,6 +1,6 @@
 
 require( "src.GUI.general.util")
-TitleGUI = require( "src.GUI.Title.TitleGUI" )
+local TitleGUI = require( "src.GUI.Title.TitleGUI" )
 
 local Title = {}
 
@@ -18,7 +18,7 @@ function Title:leave()
 end
 
 function Title:update(dt)
-    self:check_for_state_change()
+    TitleGUI.update( self, dt )
 end
 
 function Title:draw()
@@ -40,16 +40,6 @@ function Title:mousereleased(x, y, button)
 end
 
 function Title:quit()
-end
-
-function Title:check_for_state_change()
-    if self._quit then
-        love.event.quit()
-    end
-    if self._start_local_game then
-        self._start_local_game = false
-        Gamestate.switch(Battle, true)
-    end
 end
     
 return Title

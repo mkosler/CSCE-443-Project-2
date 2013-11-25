@@ -72,7 +72,7 @@ end
 function MiniTile.add_new_button( grid, mini_tile )
     local button = create_text_button( nil, nil, nil, nil, nil, MiniTile.skin_name )
     button.sub_object = mini_tile
-    button.OnClick = MiniTile.cb
+    button.OnClick["l"] = MiniTile.cb
     grid:AddItem(button, mini_tile.tile.y+1, mini_tile.tile.x+1 )
 end
 

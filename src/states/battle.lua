@@ -10,7 +10,7 @@ local BattleGUI = require( "src.GUI.Battle.BattleGUI" )
 local Battle = {}
 
 function Battle.create_test_map()
-    local map = BattleMap.init()
+    local map = BattleMap()
     return map
 end
 
@@ -52,10 +52,10 @@ function Battle:enter(previous, reset)
         Battle.master = nil
         Battle.game_master = nil
         Battle.map = nil
-        self._quit = false
-        self._end_turn = false
-        Battle.map = Battle.create_test_map()
-        Battle.units = Battle.create_test_units()
+        Battle.GUI = BattleGUI
+        self.map = Battle.create_test_map()
+        self.units = Battle.create_test_units()
+        self.turn = 0
         BattleGUI.createBattleGUI( self )
     end
     loveframes.SetState("Battle")
@@ -71,23 +71,7 @@ end
 -- Called once every frame before any draw calls
 -- @param dt The time between the last frame and the current frame (deltatime)
 function Battle:update(dt)
-    if self._quit then
-        Gamestate.switch(Title)
-    end
-    if self._end_turn then
-        self._end_turn = false
-        BattleMap.turn = BattleMap.turn + 1
-        BattleMap.selected_tile = nil
-        for i, tile in ipairs( BattleMap.movement_tiles ) do
-            tile.movement = false
-        end
-        for i, tile in ipairs( BattleMap.attack_tiles ) do
-            tile.attack = false
-        end
-        BattleMap.movement_tiles = {}
-        BattleMap.attack_tiles = {}
-        loveframes.skins.Get("teamui").set_team( BattleMap.turn )
-    end
+    BattleGUI.update(self,dt)
     for i, unit in ipairs(Battle.units) do
         if unit.is_dead then
             self.map.tiles[unit.x][unit.y].sub_unit = nil
@@ -116,9 +100,7 @@ end
 -- @param key The key pressed in the event, as a string (http://www.love2d.org/wiki/KeyConstant)
 -- @param code The ASCII value of the key pressed in the event
 function Battle:keyreleased(key, code)
-    if key == 'b' then
-        Gamestate.switch(Title)
-    end
+
 end
 
 --- Handles the mouse press events for the state
@@ -140,6 +122,10 @@ end
 -- Useful for cleaning up memory or cleaning up network connections
 function Battle:quit()
     Gamestate.switch(Title)
+end
+
+function Battle:is_user_turn()
+    return true
 end
 
 return Battle

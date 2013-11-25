@@ -1,11 +1,6 @@
 local event_queue = {}
 
-function event_queue.init()
-    local self = {}
-    setmetatable(self,event_queue)
-    event_queue.events = {}
-    return self
-end
+event_queue.events = {}
 
 function event_queue:push( event )
     table.insert( self.events, event )
@@ -16,3 +11,5 @@ function event_queue:poll()
     self.events = {}
     return temp_dict
 end
+
+return event_queue

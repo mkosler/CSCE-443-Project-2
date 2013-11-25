@@ -20,7 +20,7 @@ function newobject:initialize()
 	self.down = false
 	self.clickable = true
 	self.enabled = true
-	self.OnClick = nil
+	self.OnClick = {}
 	
 end
 
@@ -137,8 +137,9 @@ function newobject:mousepressed(x, y, button)
 	end
 	
 	local hover = self.hover
+    local onclick = self.OnClick[button]
 	
-	if hover and button == "l" then
+	if hover and onclick ~= nil then
 		local baseparent = self:GetBaseParent()
 		if baseparent and baseparent.type == "frame" then
 			baseparent:MakeTop()
@@ -172,9 +173,9 @@ function newobject:mousereleased(x, y, button)
 	local down = self.down
 	local clickable = self.clickable
 	local enabled = self.enabled
-	local onclick = self.OnClick
+	local onclick = self.OnClick[button]
 	
-	if hover and down and clickable and button == "l" then
+	if hover and down and clickable then
 		if enabled then
 			if onclick then
 				onclick(self, x, y)

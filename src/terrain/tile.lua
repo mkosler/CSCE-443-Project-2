@@ -96,10 +96,6 @@ function Tile:draw(object)
     end
 end
 
-function Tile:cb_selected( object, x, y )
-    self.selected = true
-end
-
 function Tile:__tostring()
   return self.name
 end

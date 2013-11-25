@@ -20,7 +20,7 @@ end
 
 function CombatGUI.create_button(e, i )
     local button = create_text_button( "", i*(conf.screen.width/2+10), conf.screen.height/2, conf.screen.width/2 - 10, conf.screen.height/2-40, "terrain" )
-    button.OnClick = function() end
+    button.OnClick["l"] = function() end
     button.sub_object = e
     return button
 end

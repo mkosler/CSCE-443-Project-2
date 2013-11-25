@@ -1,15 +1,16 @@
 local BattleMap = require( "src.BattleMap")
 local Tile = require "src.terrain.tile"
 local MiniTile = require "src.GUI.Battle.MiniTile"
+local BATTLE_GUI_EVENTS = require(  "src.GUI.Battle.events" )
 
 local BattleGUI = {}
 
 function BattleGUI.quit( object, x, y )
-    object.cb_state._quit = true
+    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.EXIT_BATTLE_MAP )
 end
 
 function BattleGUI.end_turn( object, x, y )
-    object.cb_state._end_turn = true
+    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.END_TURN )
 end
 
 BattleGUI.game_buttons = { "End Turn", "Quit" }
@@ -30,18 +31,42 @@ local function update_tile_panel( object, dt )
     local multi = BattleGUI.default_tile_size*3
     
     if mouse_x > s_width - 10 and object.x > -object.width+s_width then
-        object:SetX( object.x-multi*dt )
+        BattleGUI.camera_x = BattleGUI.camera_x-multi*dt
     elseif mouse_x < 10 and object.x <= 0 then
-        object:SetX( object.x+multi*dt )
+        BattleGUI.camera_x = BattleGUI.camera_x+multi*dt
     end
     if mouse_y > s_height + object.ui_height - 10 and object.y > -object.height+s_height-75 then
-        object:SetY( object.y-multi*dt )
+        BattleGUI.camera_y = BattleGUI.camera_y-multi*dt
     elseif  mouse_y < 10 and object.y <= 0 then
-        object:SetY( object.y+multi*dt )
+        BattleGUI.camera_y = BattleGUI.camera_y+multi*dt
+    end
+    
+    if BattleGUI.camera_x ~= object.x then
+        object:SetX( BattleGUI.camera_x )
+    end
+    if BattleGUI.camera_y ~= object.y then
+        object:SetY( BattleGUI.camera_y )
+    end
+end
+
+function BattleGUI.update( State, dt )
+    State.map.turn = State.turn
+    new_events = BattleGUI.event_queue:poll()
+    --print( str_dict( new_events, 0 ) )
+    while #new_events > 0 do
+        event = table.remove( new_events, 1 )
+        print( event.name )
+        dispatched_events = event:act( State, dt )
+        for _, dispatch_event in pairs( dispatched_events ) do
+            table.insert( new_events, 1, dispatch_event )
+        end
     end
 end
 
 function BattleGUI.createBattleGUI( Battle_State )
+    BattleGUI.camera_x = 0
+    BattleGUI.camera_y = 0
+    BattleGUI.event_queue = require( "src.GUI.General.event_queue" )
     local master = create_panel( conf.screen.width, conf.screen.height, BattleGUI.skin_name )
     master:SetPos( 0 , 0 )
     master:SetState("Battle")
@@ -88,7 +113,8 @@ function BattleGUI.create_tiles( map, units )
     for x = 0, map.width-1, 1 do
         for y = 0, map.height-1, 1 do
             local tile_button = BattleGUI.create_tile( map.tiles[x][y] )
-            tile_button.OnClick = BattleMap.selected
+            tile_button.OnClick["l"] = BattleGUI.left_click_tile
+            tile_button.OnClick["r"] = BattleGUI.right_click_tile
             grid:AddItem(tile_button, y+1, x+1 )
         end
     end
@@ -142,7 +168,7 @@ function BattleGUI.create_game_buttons( Battle_State, width )
     local buttons = {}
     for i, button_text in ipairs(BattleGUI.game_buttons) do
         local button = create_text_button( button_text, nil, nil, nil, nil, BattleGUI.team_skin_name )
-        button.OnClick = BattleGUI.game_button_callbacks[i]
+        button.OnClick["l"] = BattleGUI.game_button_callbacks[i]
         button.cb_state = Battle_State
         button:SetWidth( width )
         button:SetHeight( 50 )
@@ -159,6 +185,14 @@ function BattleGUI.create_buttons(Battle_State, map)
     button_list:SetWidth( panel:GetWidth() )
     button_list:Center()
     return panel
+end
+
+function BattleGUI.left_click_tile( object, x, y )
+    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.SELECT_TILE( object.sub_object ) ) 
+end
+
+function BattleGUI.right_click_tile( object, x, y )
+    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.INTERACT_WITH( BATTLE_GUI_EVENTS.SELECT_TILE.selected_tile, object.sub_object ) ) 
 end
 
 return BattleGUI
