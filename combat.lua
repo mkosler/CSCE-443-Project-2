@@ -2,7 +2,7 @@
 return {
   PLAYER_RESOURCE = 100,
   LIGHT_INFANTRY = {
-    des = "Light Infantries are the first line of defense, espeically trained to take down Heavy Infantry. Also, the agility of Light Infantry is effective in retailation with Helicopter. Note: Insufficient weapon to penerate the armor of Heavy Vehicle."
+    des = "Light Infantries are the first line of defense, espeically trained to take down Heavy Infantry. Also, the agility of Light Infantry is effective in retailation with Helicopter. Note: Insufficient weapon to penerate the armor of Heavy Vehicle.",
     img = "light_infantry.png", 
     HP = 100,
     MOVE = 6,
@@ -25,7 +25,7 @@ return {
     },
   },
   HEAVY_INFANTRY = {
-    des = "Heavy Infantry is armed to against Light Vehicle in combat, but attacking are poorly against Helicopter. On defense, Heavy Infantry are weak against Light Infantry. "
+    des = "Heavy Infantry is armed to against Light Vehicle in combat, but attacking are poorly against Helicopter. On defense, Heavy Infantry are weak against Light Infantry. ",
     img = "heavy_infantry.png",
     HP = 100,
     MOVE = 4,
@@ -48,7 +48,7 @@ return {
     },
   },
   LIGHT_VEHICLE = {
-    des = "Light Vehicle perform badly when attacking Heavy Vehicle, but strongly against Helicopter. In retaliation, Light Vehicle are powerful to Helicopter, but are feeble to Heavy Infantry and Heavy Vehicle. "
+    des = "Light Vehicle perform badly when attacking Heavy Vehicle, but strongly against Helicopter. In retaliation, Light Vehicle are powerful to Helicopter, but are feeble to Heavy Infantry and Heavy Vehicle. ",
     img = "light_vehicle.png",
     HP = 100,
     MOVE = 6,
@@ -71,7 +71,7 @@ return {
     },
   },
   HEAVY_VEHICLE = {
-    des = "Heavy Vehicle are the classic tank, strengthen to attack Light Vehicle. They are designated to destroy Light Vehicle. However, they are badly against Helicopter. In defense, Heavy Vehicle performs well in contact with Light Infantry and Light Vehicle, but can only contribute slightly in retaliation with Helicopter. "
+    des = "Heavy Vehicle are the classic tank, strengthen to attack Light Vehicle. They are designated to destroy Light Vehicle. However, they are badly against Helicopter. In defense, Heavy Vehicle performs well in contact with Light Infantry and Light Vehicle, but can only contribute slightly in retaliation with Helicopter. ",
     img = "heavy_vehicle.png",
     HP = 100,
     MOVE = 4,
@@ -94,7 +94,7 @@ return {
     },
   },
   HELICOPTER = {
-    des = "The anti-ground war machine, Helicopter, is the killer of Heavy Vehicle. In return, it causes less damage to Light Infantry and Light Vehicle. When defending, Helicopter retaliate with double-damage against Heavy Infantry and Heavy Vehicle. Helicopter can only perform minimum when counterattack to Light Vehicle. "
+    des = "The anti-ground war machine, Helicopter, is the killer of Heavy Vehicle. In return, it causes less damage to Light Infantry and Light Vehicle. When defending, Helicopter retaliate with double-damage against Heavy Infantry and Heavy Vehicle. Helicopter can only perform minimum when counterattack to Light Vehicle. ",
     img = "helicopter.png", 
     HP = 100,
     MOVE = 6,
@@ -117,7 +117,7 @@ return {
     },
   },
   COMMANDER = {
-    des = "Commander are the highest and the most important unit overall. They are represent as a player’s victory or defeated. When they attack, the defender are not able to retaliate Commander. "
+    des = "Commander are the highest and the most important unit overall. They are represent as a player’s victory or defeated. When they attack, the defender are not able to retaliate Commander. ",
     img = nil,--"commander.png" 
     HP = 100,
     MOVE = 1,

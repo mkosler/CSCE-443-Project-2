@@ -190,6 +190,8 @@ end
 local ATTACK_UNIT = Class{ __includes = event }
 
 function ATTACK_UNIT:init( tile1, tile2 )
+    self.attack_terrain = tile1
+    self.defend_terrain = tile2
     self.attacking_unit = tile1.sub_unit
     self.defending_unit = tile2.sub_unit
 end
@@ -198,7 +200,7 @@ function ATTACK_UNIT:act( State, dt )
     if not self.attacking_unit.attacked and self.attacking_unit:is_units_turn( State )  then
         self.attacking_unit.moved = true
         self.attacking_unit.attacked = true
-        Gamestate.switch(Combat, self.attacking_unit, self.defending_unit )
+        Gamestate.switch(Combat, self.attacking_unit, self.defending_unit, self.attack_terrain, self.defend_terrain )
     end
     return {}
 end

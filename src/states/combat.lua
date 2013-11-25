@@ -29,7 +29,6 @@ function Combat:enter(previous, attacker, defender, atk_terrain, def_terrain)
     
     -- Perform combat calculations inside the enter function
     self:update_hp()
-    print("hello")
 end
 
 function Combat:update_hp()
@@ -65,11 +64,11 @@ end
 
 function Combat:get_atk_terrain_amp()
     -- return the attacker's terrain amplifier 
-    return self.atk_terrain.attack
+    return self.atk_terrain.attack_mod
 end
 
 function Combat:get_def_terrain_amp( ... )
-    return self.def_terrain.defend
+    return self.def_terrain.defend_mod
 end
 
 function Combat:get_atk_amp()
@@ -85,6 +84,7 @@ function Combat:cal_attack_dmg(amp, terrain_amp)
 		self.attack_dmg_crit = true
 	else 
 		self.attack_dmg_crit = false
+    end
 		
 	if self.attack_dmg_crit then 
 		return self.attacker.attack_value*amp*terrain_amp*(1.3 + 0.1 * math.random(1, 4))
@@ -98,6 +98,7 @@ function Combat:cal_defend_dmg(amp, terrain_amp)
 		self.defend_dmg_crit = true
 	else 
 		self.defend_dmg_crit = false
+    end
 		
 	if self.defend_dmg_crit then 
 		return self.defender.attack_value*amp*terrain_amp*(1.3 + 0.1 * math.random(1, 4))

@@ -17,13 +17,13 @@ local Plain = Class{ __includes = Tile }
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile
 -- @param column Column of the tile
-function Plain:init(x, y, row, column)
-  Tile.init(self, "Plain", x, y, row, column)
+function Plain:init(x, y)
+  Tile.init(self, "PLAIN", x, y)
   local name = "PLAIN"
   
-  self.attack      = TERRAIN[name].ATTACK
-  self.defend      = TERRAIN[name].DEFEND
-  self.move        = TERRAIN[name].MOVE
+  self.attack_mod      = TERRAIN[name].ATTACK
+  self.defend_mod      = TERRAIN[name].DEFEND
+  self.move_mod        = TERRAIN[name].MOVE
   self.is_passible = TERRAIN[name].PASSIBLE
   
 end

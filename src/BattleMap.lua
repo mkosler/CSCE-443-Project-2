@@ -1,5 +1,5 @@
 local Class = require 'lib.class'
-local Tile = require "src.terrain.tile"
+local Plain = require "src.terrain.plain"
 local Graph = require("lib.graph")
 local BattleMap = Class{}
 
@@ -12,7 +12,7 @@ function BattleMap:init()
     for x = 0, self.width-1, 1 do
         table.insert(tiles, x, {})
         for y = 0, self.height-1, 1 do
-            table.insert( tiles[x], y, Tile( x..":"..y, x, y ) )
+            table.insert( tiles[x], y, Plain( x, y ) )
         end
     end
     for x = 0, self.width-1, 1 do
