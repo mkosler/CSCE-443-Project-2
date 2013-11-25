@@ -17,8 +17,8 @@ local Amplifier = Class{ __includes = Tile }
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile
 -- @param column Column of the tile
-function Amplifier:init(x, y, row, column)
-  Tile.init(self, "Amplifier", x, y, row, column)
+function Amplifier:init(x, y)
+  Tile.init(self, "Amplifier", x, y)
   local name = "AMPLIFIER"
   
   self.img         = TERRAIN[name].IMG

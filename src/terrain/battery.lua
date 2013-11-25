@@ -17,8 +17,8 @@ local Battery = Class{ __includes = Tile }
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile
 -- @param column Column of the tile
-function Battery:init(x, y, row, column)
-  Tile.init(self, "Battery", x, y, row, column)
+function Battery:init(x, y)
+  Tile.init(self, "Battery", x, y)
   local name = "BATTERY"
 
   self.img         = TERRAIN[name].IMG

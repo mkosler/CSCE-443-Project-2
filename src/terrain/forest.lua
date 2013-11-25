@@ -17,8 +17,8 @@ local Forest = Class{ __includes = Tile }
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile
 -- @param column Column of the tile
-function Forest:init(x, y, row, column)
-  Tile.init(self, "Forest", x, y, row, column)
+function Forest:init(x, y)
+  Tile.init(self, "Forest", x, y)
   local name = "FOREST"
   
   self.attack      = TERRAIN[name].ATTACK

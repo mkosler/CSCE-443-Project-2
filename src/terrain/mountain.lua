@@ -17,8 +17,8 @@ local Mountain = Class{ __includes = Tile }
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile
 -- @param column Column of the tile
-function Mountain:init(x, y, row, column)
-  Tile.init(self, "Mountain", x, y, row, column)
+function Mountain:init(x, y)
+  Tile.init(self, "Mountain", x, y)
   local name = "MOUNTAIN"
   
   self.attack      = TERRAIN[name].ATTACK

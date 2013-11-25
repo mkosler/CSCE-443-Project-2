@@ -17,8 +17,8 @@ local Ground = Class{ __includes = Tile }
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile
 -- @param column Column of the tile
-function Ground:init(x, y, row, column)
-  Tile.init(self, "Ground", x, y, row, column)
+function Ground:init(x, y)
+  Tile.init(self, "Ground", x, y)
   local name = "GROUND"
 
   self.img         = TERRAIN[name].IMG

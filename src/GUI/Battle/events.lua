@@ -178,8 +178,6 @@ function MOVED_UNIT:act( State, dt )
     self.to_tile.sub_unit = self.unit
     self.unit.x = self.to_tile.x
     self.unit.y = self.to_tile.y
-    HIGHLIGHT_MOVEMENT.unhighlight()
-    HIGHLIGHT_ATTACK.unhighlight()
     return {}
 end
 
@@ -217,8 +215,14 @@ function INTERACT_WITH:act( State, dt )
     local return_events = {}
     if self.tile2.attack then
         table.insert( return_events, ATTACK_UNIT(self.tile1, self.tile2) )
+        HIGHLIGHT_MOVEMENT.unhighlight()
+        HIGHLIGHT_ATTACK.unhighlight()
+        SELECT_TILE.selected_tile = nil
     elseif self.tile2.movement then
         table.insert( return_events, MOVE_UNIT(self.tile1, self.tile2) )
+        HIGHLIGHT_MOVEMENT.unhighlight()
+        HIGHLIGHT_ATTACK.unhighlight()
+        SELECT_TILE.selected_tile = nil
     else
         table.insert( return_events, SELECTED_TILE(self.tile2) )
     end

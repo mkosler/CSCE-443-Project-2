@@ -10,6 +10,8 @@ Gamestate = require 'lib.gamestate'
 Title = require 'src.states.title'
 Battle = require 'src.states.battle'
 Combat = require 'src.states.combat'
+local Loader = require 'src.loader'
+
 ------------------------------------------------------------------------
 -- GAMESTATES ----------------------------------------------------------
 ------------------------------------------------------------------------
@@ -22,6 +24,8 @@ local Title = require 'src.states.title'
 
 --- Called after LOVE modules loaded
 function love.load()
+  local tiles = Loader.load('CSCE-443-Project-2/assets/test.smf', 3, 3)
+
     Gamestate.registerEvents()
     Gamestate.switch(Title)
 end

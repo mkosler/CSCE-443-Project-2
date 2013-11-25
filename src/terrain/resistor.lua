@@ -17,8 +17,8 @@ local Resistor = Class{ __includes = Tile }
 -- @param y Y-coordinate of the tile
 -- @param row Row of the tile
 -- @param column Column of the tile
-function Resistor:init(x, y, row, column)
-  Tile.init(self, "Resistor", x, y, row, column)
+function Resistor:init(x, y)
+  Tile.init(self, "Resistor", x, y)
   local name = "RESISTOR"
 
   self.img         = TERRAIN[name].IMG

@@ -30,6 +30,8 @@ function Tile.init(self, name, x, y)
   for i = 0, Tile.num_connections-1, 1 do
     self.connections[i] = false
   end
+  
+  self.connections = {}
 end
 
 --- Draw the tile
