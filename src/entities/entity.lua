@@ -1,4 +1,5 @@
 local Class = require 'lib.class'
+local COMBAT_DEFAULTS = require 'combat'
 
 local Entity = Class{}
 
@@ -6,6 +7,7 @@ local nextID = 0
 
 function Entity:init(name, x, y, side)
   self.name = name
+  self.image_name = COMBAT_DEFAULTS[name].img
 
   self.x = x
   self.y = y
@@ -31,18 +33,25 @@ function Entity:draw(object)
 	local enabled = object:GetEnabled()
 	local clickable = object:GetClickable()
     
+    love.graphics.setColor(192,0,0,255)
+    love.graphics.rectangle("fill",rx,ry+height-5, width, 5 )
+    love.graphics.setColor(0, 192, 0, 255 )
+    love.graphics.rectangle("fill",rx,ry+height-5, (width)*self.hp/100, 5 )
+    
     if self.image_name ~= nil then
         local image = skin.images[ self.image_name ]
-        local sx = width/image:getWidth() * math.pow( -1, self.side )
-        local sy = height/image:getHeight()
-        if self.side == 0 then
-            love.graphics.setColor(0, 255, 255, 255)
-        elseif self.side == 1 then
-            love.graphics.setColor(255, 0, 0, 255)
-        else
-            love.graphics.setColor(255, 255, 255, 255)
+        if image ~= nil then
+            local sx = width/image:getWidth() * math.pow( -1, self.side )
+            local sy = height/image:getHeight()
+            if self.side == 0 then
+                love.graphics.setColor(0, 255, 255, 255)
+            elseif self.side == 1 then
+                love.graphics.setColor(255, 0, 0, 255)
+            else
+                love.graphics.setColor(255, 255, 255, 255)
+            end
+            love.graphics.draw(image, rx+width*self.side, ry, 0, sx, sy, 0, 0 )
         end
-        love.graphics.draw(image, rx+width*self.side, ry, 0, sx, sy, 0, 0 )
     else
         local text = self.name
         local font = skin.controls.button_text_font

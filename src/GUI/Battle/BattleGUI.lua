@@ -6,11 +6,11 @@ local BATTLE_GUI_EVENTS = require(  "src.GUI.Battle.events" )
 local BattleGUI = {}
 
 function BattleGUI.quit( object, x, y )
-    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.EXIT_BATTLE_MAP )
+    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.EXIT_BATTLE_MAP() )
 end
 
 function BattleGUI.end_turn( object, x, y )
-    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.END_TURN )
+    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.END_TURN() )
 end
 
 BattleGUI.game_buttons = { "End Turn", "Quit" }
@@ -20,8 +20,16 @@ BattleGUI.skin_name = "default"
 BattleGUI.skin = loveframes.skins.Get("default")
 BattleGUI.terrain_skin_name = "terrain"
 BattleGUI.team_skin_name = "teamui"
-BattleGUI.default_tile_size = 100
+BattleGUI.default_tile_size = 50
 BattleGUI.font = love.graphics.newFont("assets/GUI/Fonts/Terminus.ttf", 40 )
+
+function MiniTile.cb(object, x, y)
+    local mini_tile = object.sub_object
+    local tile = mini_tile.tile
+    local camera_x = -(tile.x+.5)*BattleGUI.default_tile_size+conf.screen.width/2
+    local camera_y = -(tile.y+.5)*BattleGUI.default_tile_size+conf.screen.height/2
+    BattleGUI.event_queue:push( BATTLE_GUI_EVENTS.MOVE_CAMERA( camera_x, camera_y ) )
+end
 
 local function update_tile_panel( object, dt )
     local mouse_x = love.mouse.getX()
@@ -53,8 +61,8 @@ function BattleGUI.update( State, dt )
     State.map.turn = State.turn
     new_events = BattleGUI.event_queue:poll()
     if State.network ~= nil then
-        State.network:send_queue( new_events, State.turn )
         State.network:update( BATTLE_GUI_EVENTS, State, new_events, dt )
+        State.network:send_queue( new_events, State.turn )
     end
     --print( str_dict( new_events, 0 ) )
     while #new_events > 0 do
@@ -99,7 +107,7 @@ function BattleGUI.createBattleGame( Battle_State )
     game_button_panel:SetParent( game_master )
     game_button_panel:SetPos( 0,  game_master:GetHeight() - mini_map_panel:GetHeight() ) 
     
-    local description_panel = BattleGUI.create_description( Battle_State.map )
+    local description_panel = BattleGUI.create_description( Battle_State, Battle_State.map )
     description_panel:SetParent( game_master )
     description_panel:SetPos( 100,  game_master:GetHeight() - mini_map_panel:GetHeight() ) 
     
@@ -161,10 +169,16 @@ function BattleGUI.create_mini_map( map )
     return panel
 end
 
-function BattleGUI.create_description( map )
+function BattleGUI.create_description( Battle_State, map )
     local px_width = conf.screen.width - MiniTile.width*map.width - 120
     local px_height = MiniTile.height*map.height + 20
     local panel = create_panel( px_width, px_height, BattleGUI.team_skin_name )
+    local description = create_text( "", nil, nil, nil, nil, BattleGUI.team_skin_name )
+    description:SetParent(panel)
+    description:SetWidth( px_width-20)
+    description:SetHeight( px_height-20)
+    description:SetPos( 10, 10 )
+    Battle_State.description = description
     return panel
 end
     

@@ -21,7 +21,7 @@ function Resistor:init(x, y)
   Tile.init(self, "Resistor", x, y)
   local name = "RESISTOR"
 
-  self.img         = TERRAIN[name].IMG
+  self.img         = TERRAIN[name].IMG.big_thick
   self.attack      = TERRAIN[name].ATTACK
   self.defend      = TERRAIN[name].DEFEND
   self.move        = TERRAIN[name].MOVE

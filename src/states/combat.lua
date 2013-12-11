@@ -1,16 +1,18 @@
- local CombatGUI = require( "src.GUI.Combat.CombatGUI" )
+local CombatGUI = require( "src.GUI.Combat.CombatGUI" )
 local Combat = {}
 
 function Combat:init()
 end
 
-function Combat:enter(previous, attacker, defender, atk_terrain, def_terrain)
+function Combat:enter(previous, attacker, defender, atk_terrain, def_terrain, network)
     loveframes.SetState("Combat")
+    self.network = network
     if Combat.master ~= nil then 
         Combat.master:Remove()
     end
     
     self.attacker       = attacker
+    self.turn = attacker.side
     self.defender       = defender
     self.atk_terrain    = atk_terrain
     self.def_terrain    = def_terrain
@@ -20,15 +22,48 @@ function Combat:enter(previous, attacker, defender, atk_terrain, def_terrain)
         self.left = attacker
         self.right = defender
     else
-        self.right = attacker
-        self.left = defender
+        self.right = defender
+        self.left = attacker
     end
     self.left_button = CombatGUI.create_button(self.left,0)
     self.right_button = CombatGUI.create_button(self.right,1)
     CombatGUI.create_panel(self, self.left_button, self.right_button, self.left, self.right)
     
     -- Perform combat calculations inside the enter function
-    self:update_hp()
+    --self:update_hp()
+    local attacker_amp = self:get_atk_amp()
+    local defender_amp = self:get_def_amp()
+	
+	
+	local atk_terrain_amp = 1--self:get_atk_terrain_amp()
+	local def_terrain_amp = 1--self:get_def_terrain_amp()
+
+    self.dmg = { 
+      atk_dmg = self:cal_attack_dmg(attacker_amp, atk_terrain_amp),
+      def_dmg = self:cal_defend_dmg(defender_amp, def_terrain_amp)
+    }
+    print("hellodonkey")
+    print(self.dmg.atk_dmg)
+end
+
+function Combat:update_attack()
+    if self.dmg.atk_dmg > self.defender.hp then 
+        self.defender.hp = 0
+        self.defender.is_dead = true
+    else
+        self.defender.hp = self.defender.hp - self.dmg.atk_dmg
+    end 
+end
+
+function Combat:update_defend()
+    if not self.defender.is_dead then 
+        if self.dmg.def_dmg > self.attacker.hp then 
+            self.attacker.is_dead = false
+            self.attacker.hp = 0
+        else
+            self.attacker.hp = self.attacker.hp - self.dmg.atk_dmg
+        end
+    end 
 end
 
 function Combat:update_hp()
@@ -44,22 +79,7 @@ function Combat:update_hp()
       def_dmg = self:cal_defend_dmg(defender_amp, def_terrain_amp)
     }
 
-    if self.dmg.atk_dmg > self.defender.hp then 
-        self.defender.hp = 0
-        self.defender.is_dead = true
-    else
-        self.defender.hp = self.defender.hp - self.dmg.atk_dmg
-    end 
-
     -- if the defender died 
-    if not self.defender.is_dead then 
-        if self.dmg.def_dmg > self.attacker.hp then 
-            self.attacker.is_dead = false
-            self.attacker.hp = 0
-        else
-            self.attacker.hp = self.attacker.hp - self.dmg.atk_dmg
-        end
-    end 
 end
 
 function Combat:get_atk_terrain_amp()
@@ -111,6 +131,7 @@ function Combat:leave()
 end
 
 function Combat:update(dt)
+    CombatGUI.update(self,dt)
 end
 
 function Combat:draw()
@@ -132,10 +153,16 @@ function Combat:mousepressed(x, y, button)
 end
 
 function Combat:mousereleased(x, y, button)
-    if self.count == 3 then
-        Gamestate.switch(Battle, false)
-    else
-        self.count = self.count + 1
+    --print(self.dmg.atk_dmg)
+    --print(self.count)
+    self.count = self.count + 1
+    --print(self.dmg.atk_dmg)
+   if self.count == 1 then
+        CombatGUI.event_queue:push(CombatGUI.events.ATTACK(self.dmg.atk_dmg))
+    elseif self.count == 2 then
+        CombatGUI.event_queue:push(CombatGUI.events.DEFEND(self.dmg.def_dmg))
+    elseif self.count == 3 then
+        CombatGUI.event_queue:push(CombatGUI.events.RETURN_TO_BATTLE())
     end
 end
 

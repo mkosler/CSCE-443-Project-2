@@ -1,5 +1,6 @@
 local Class = require 'lib.class'
 local Tile = require "src.terrain.tile"
+local BATTLE_GUI_EVENTS = require(  "src.GUI.Battle.events" )
 
 ------------------------------------------------------------------------
 -- Functions -----------------------------------------------------------
@@ -30,6 +31,9 @@ function MiniTile:draw( object )
     local sub_unit = self.tile.sub_unit
     local terrain_color = self.tile.mini_terrain_color
     
+    g.setColor( skin.controls.black )
+    g.rectangle("fill", x, y, MiniTile.width, MiniTile.height )
+    
     local no_connections = true
     for i = 0, Tile.num_connections-1, 1 do
         local exists = self.tile.connections[i]
@@ -40,9 +44,9 @@ function MiniTile:draw( object )
             g.setColor( skin.controls.black )
         end
         local rotation = Tile.connection_interval*i
-        local x1 = x + qwidth*( math.cos(rotation) + 1 )
-        local y1 = y + qheight*( - math.sin(rotation) + 1 )
-        g.rectangle("fill", x1, y1, qwidth, qheight )
+        local x1 = x + MiniTile.width/2*( math.cos(rotation) + 1 )
+        local y1 = y + MiniTile.height/2*( - math.sin(rotation) + 1 )
+        g.line(x+MiniTile.width/2, y + MiniTile.height/2, x1, y1 )
     end
     
     if sub_unit ~= nil then
@@ -54,7 +58,7 @@ function MiniTile:draw( object )
             g.setColor( skin.controls.green )
         end
     end
-    g.rectangle("fill", x+qwidth, y+qheight, qwidth, qheight )
+    g.rectangle("fill", x+2, y+2, MiniTile.width-4, MiniTile.height-4 )
     
     
     if terrain_color ~= nil then
@@ -64,7 +68,7 @@ function MiniTile:draw( object )
     end
     for xi = 0, 2, 2 do
         for yi = 0, 2, 2 do
-            g.rectangle("fill", x+qwidth*xi, y+qheight*yi, qwidth, qheight )
+            --g.rectangle("fill", x+qwidth*xi, y+qheight*yi, qwidth, qheight )
         end
     end
 end
@@ -74,13 +78,6 @@ function MiniTile.add_new_button( grid, mini_tile )
     button.sub_object = mini_tile
     button.OnClick["l"] = MiniTile.cb
     grid:AddItem(button, mini_tile.tile.y+1, mini_tile.tile.x+1 )
-end
-
-function MiniTile.cb(object, x, y)
-    local mini_tile = object.sub_object
-    local tile = mini_tile.tile
-    print( tile.x.." "..tile.y )
-    MiniTile.clicked = { x = tile.x, y = tile.y }
 end
 
 return MiniTile

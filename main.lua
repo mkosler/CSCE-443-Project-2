@@ -4,12 +4,14 @@
  -- load GUI Lib( LoveFrames 0.9.6.4 Alpha )
 require('lib.LoveFrames')
 -- load Networking lib
-require('lib.LUBE.LUBE')
+require('lib.LUBE.LUBE.init')
+--require('lib.LUBE.tests.test')
 COMBAT_DEFAULTS = require( "combat" )
 Gamestate = require 'lib.gamestate'
 Title = require 'src.states.title'
 Battle = require 'src.states.battle'
 Combat = require 'src.states.combat'
+require 'src.GUI.General.sounds'
 local Loader = require 'src.loader'
 
 ------------------------------------------------------------------------

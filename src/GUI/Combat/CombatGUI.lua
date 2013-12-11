@@ -1,5 +1,7 @@
-
+local COMBAT_GUI_EVENTS = require( "src.GUI.Combat.events")
 local CombatGUI = {}
+CombatGUI.events = COMBAT_GUI_EVENTS
+CombatGUI.event_queue = require( "src.GUI.General.event_queue" )
 
 local function panel_draw(object)
     local g = love.graphics
@@ -25,6 +27,23 @@ function CombatGUI.create_button(e, i )
     return button
 end
 
+function CombatGUI.update( State, dt )
+    new_events = CombatGUI.event_queue:poll()
+    if State.network ~= nil then
+        State.network:update( COMBAT_GUI_EVENTS, State, new_events, dt )
+        State.network:send_queue( new_events, State.turn )
+    end
+    --print( str_dict( new_events, 0 ) )
+    while #new_events > 0 do
+        event = table.remove( new_events, 1 )
+        print( event.name )
+        dispatched_events = event:act( State, dt )
+        for _, dispatch_event in pairs( dispatched_events ) do
+            table.insert( new_events, 1, dispatch_event )
+        end
+    end
+end
+
 function CombatGUI.create_panel(Combat_State, left_button, right_button, left, right )
     local panel = create_panel( conf.screen.width, conf.screen.height, "default" )
     panel.left = left
@@ -37,7 +56,6 @@ function CombatGUI.create_panel(Combat_State, left_button, right_button, left, r
     left_button:SetPos( 0, conf.screen.height/2)
     right_button:SetParent( panel )
     right_button:SetPos( (conf.screen.width/2+10), conf.screen.height/2)
-    
     Combat_State.master = panel
 end
 

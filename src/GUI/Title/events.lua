@@ -1,6 +1,6 @@
 local Class = require 'lib.class'
 local Server = require "src.Network.Server"
-local Client = require "src.Network.Server"
+local Client = require "src.Network.Client"
 local event = require( "src.GUI.General.event" )
 local events = {}
 
@@ -40,7 +40,7 @@ end
 
 function START_LOCAL_SERVER:act( State, dt )
     State.network = Server()
-    Gamestate.switch(Battle, true, State.network)
+    loveframes.SetState("waiting")
     return {}
 end
 
@@ -53,11 +53,24 @@ function CONNECT_TO_SERVER:init( )
 end
 
 function CONNECT_TO_SERVER:act( State, dt )
-    State.network = Client()
+    State.network = Client("127.0.0.1")
     Gamestate.switch(Battle, true, State.network)
     return {}
 end
 
 events.CONNECT_TO_SERVER = CONNECT_TO_SERVER
+
+local CANCEL = Class{ __includes = event }
+
+function CANCEL:init()
+    event.init(self,"CANCEL")
+end
+
+function CANCEL:act(State, dt )
+    State.network = nil
+    return {}
+end
+
+events.CANCEL = CANCEL
 
 return events

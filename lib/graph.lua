@@ -80,7 +80,7 @@ end
 -- @param o The creator node from which the paths emanate
 -- @param depth The maximum length (depth) of the paths
 -- @returns A set of creator node paths of the given length
-function Graph:findPaths(o, depth)
+function Graph:findPaths(o, depth, current_turn)
   for _,v in pairs(self._nodes) do
     v._path = {}
     v._depth = 0
@@ -99,20 +99,26 @@ function Graph:findPaths(o, depth)
       table.insert( paths, t._path)
       for _,u in pairs(t.neighbors) do
         local neighbor = self._nodes[u]
-        -- Build the new path from the parent path
-        local p = shallow(t._path)
-        table.insert(p, u)
+        turn = -1
+        if u.sub_unit ~= nil then
+            turn = u.sub_unit.side
+        end
+        if turn < 0 or turn == current_turn then
+            -- Build the new path from the parent path
+            local p = shallow(t._path)
+            table.insert(p, u)
 
-        -- Set the new path
-        neighbor._path = p
+            -- Set the new path
+            neighbor._path = p
 
-        -- Set the depth
-        neighbor._depth = t._depth + 1
+            -- Set the depth
+            neighbor._depth = t._depth + 1
 
-        -- Add it to the queue
-        if not search( set, neighbor ) then
-            table.insert( set, neighbor )
-            table.insert(queue, neighbor)
+            -- Add it to the queue
+            if not search( set, neighbor ) then
+                table.insert( set, neighbor )
+                table.insert(queue, neighbor)
+            end
         end
       end
     end

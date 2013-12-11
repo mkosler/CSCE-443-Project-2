@@ -22,7 +22,7 @@ return {
   },
   AMPLIFIER = {
     IMG = {
-      big_thick         = 'Ampilfier_big_thick.png', 
+      big_thick         = 'Ampilfier_big_thicker.png', 
       big               = 'Ampilfier_big.png',
       small_thicker     = 'Ampilfier_small_thick.png',
       small             = 'Ampilfier_small.png',

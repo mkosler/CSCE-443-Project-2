@@ -1,9 +1,41 @@
 local Class = require 'lib.class'
 local event = require( "src.GUI.General.event" )
-local lube = require( "lib.LUBE.LUBE" )
+--local lube = require( "lib.LUBE.LUBE" )
 
 
 local events = {}
+
+local MOVE_CAMERA = Class{ __includes = event }
+
+function MOVE_CAMERA:init( x, y )
+    event.init( self, "MOVE_CAMERA" )
+    self.x = x
+    self.y = y
+end
+
+function MOVE_CAMERA:act( State, dt )
+    State.GUI.camera_x = self.x
+    State.GUI.camera_y = self.y
+    return {}
+end
+
+function MOVE_CAMERA:to_net()
+    local msg = {
+        name = self.name,
+        camera_x = self.x,
+        camera_y = self.y,
+    }
+    return msg
+end
+
+function MOVE_CAMERA.from_net( msg, State )
+    local x = msg.camera_x
+    local y = msg.camera_y
+    return MOVE_CAMERA( x, y )
+end
+
+events.MOVE_CAMERA = MOVE_CAMERA
+
 local SELECT_TILE = Class{ __includes = event }
 local HIGHLIGHT_MOVEMENT = Class{ __includes = event }
 local HIGHLIGHT_ATTACK = Class{ __includes = event }
@@ -28,10 +60,10 @@ end
 function SELECT_TILE:to_net()
     local msg = {
         name = self.name,
-        tile1x = self.tile1.x,
-        tile1y = self.tile1.y,
+        tile1x = self.selected.x,
+        tile1y = self.selected.y,
     }
-    return lube.bin:pack( msg )
+    return msg
 end
 
 function SELECT_TILE.from_net( msg, State )
@@ -45,9 +77,9 @@ events.SELECT_TILE = SELECT_TILE
 
 -- pathing helper functions --
 
-local function get_graph_paths( graph, origin_tile, depth )
+local function get_graph_paths( graph, origin_tile, depth, current_turn )
     local tiles = {}
-    for i, tile_path in ipairs(graph:findPaths( origin_tile, depth )) do
+    for i, tile_path in ipairs(graph:findPaths( origin_tile, depth, current_turn)) do
         local length = #tile_path
         if length >= 0 then
             table.insert( tiles, tile_path[length] )
@@ -100,7 +132,7 @@ function HIGHLIGHT_MOVEMENT:act( State, dt )
         if self.unit.name == "HELICOPTER" then
             HIGHLIGHT_MOVEMENT.movement_tiles = get_grid_paths( State.map.tiles, self.origin, self.unit.move )
         else
-            HIGHLIGHT_MOVEMENT.movement_tiles = get_graph_paths( State.map.graph, self.origin, self.unit.move )
+            HIGHLIGHT_MOVEMENT.movement_tiles = get_graph_paths( State.map.graph, self.origin, self.unit.move, State.turn )
         end
     else
         HIGHLIGHT_MOVEMENT.movement_tiles = {}
@@ -136,6 +168,9 @@ end
 
 function HIGHLIGHT_ATTACK:act( State, dt )
     if self.unit ~= nil then
+        if State.description ~= nil then
+            State.description:SetText( {self.unit.description} )
+        end
         HIGHLIGHT_ATTACK.attack_tiles = get_grid_paths( State.map.tiles, self.origin, self.unit.attack_range )
         self:highlight()
     else
@@ -161,6 +196,9 @@ function MOVE_UNIT:act( State, dt )
         self.unit.moved = true
         self.from_tile.sub_unit = nil
         return {MOVING_UNIT(self.unit, self.from_tile, self.to_tile)}
+    end
+    if SELECT_TILE.selected_tile ~= nil then
+        SELECT_TILE.selected_tile.selected = false
     end
     return {}
 end
@@ -215,7 +253,7 @@ function ATTACK_UNIT:act( State, dt )
     if not self.attacking_unit.attacked and self.attacking_unit:is_units_turn( State )  then
         self.attacking_unit.moved = true
         self.attacking_unit.attacked = true
-        Gamestate.switch(Combat, self.attacking_unit, self.defending_unit, self.attack_terrain, self.defend_terrain )
+        Gamestate.switch(Combat, self.attacking_unit, self.defending_unit, self.attack_terrain, self.defend_terrain, State.network )
     end
     return {}
 end
@@ -241,7 +279,7 @@ function INTERACT_WITH:act( State, dt )
         HIGHLIGHT_ATTACK.unhighlight()
         SELECT_TILE.selected_tile = nil
     else
-        table.insert( return_events, SELECTED_TILE(self.tile2) )
+        table.insert( return_events, SELECT_TILE(self.tile2) )
     end
     return return_events
 end
@@ -254,7 +292,7 @@ function INTERACT_WITH:to_net()
         tile2x = self.tile2.x,
         tile2y = self.tile2.y,
     }
-    return lube.bin:pack( msg )
+    return msg
 end
 
 function INTERACT_WITH.from_net( msg, State )
@@ -295,7 +333,7 @@ function END_TURN:to_net()
      local msg = {
         name = self.name,
     }
-    return lube.bin:pack(msg)
+    return msg
 end
 
 function END_TURN.from_net(msg, State)
@@ -319,7 +357,7 @@ function EXIT_BATTLE_MAP:to_net()
     local msg = {
         name = self.name,
     }
-    return lube.bin:pack(msg)
+    return msg
 end
 
 function EXIT_BATTLE_MAP.from_net(msg, State)

@@ -14,7 +14,6 @@ local Helicopter = Class{ __includes = Entity }
 function Helicopter:init(x, y, side)
   local self_name = "HELICOPTER"
   Entity.init(self, self_name, x, y, side)
-  self.image_name = "heli.png"
   
   -- init data ---------------------------------
   self.is_dead = false

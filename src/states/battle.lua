@@ -16,7 +16,7 @@ end
 function Battle.create_test_units()
     local HV = require( "src.entities.vehicle.heavyvehicle" )
     hv = HV( 0, 0, 0 )
-    hv1 = HV( 1, 0, 0 )
+    hv1 = HV( 2, 0, 0 )
     hv2 = HV( 29, 0, 1 )
     hv3 = HV( 28, 0, 1 )
     local LI = require( "src.entities.infantry.lightinfantry" )
@@ -44,6 +44,9 @@ end
 -- Called after every Gamestate.switch()
 -- @param previous The previous gamestate
 function Battle:enter(previous, reset, network)
+    print("n")
+    print(network)
+    print(Battle.network)
     if reset then
         if Battle.master ~= nil then
             Battle.master:Remove()
@@ -58,13 +61,15 @@ function Battle:enter(previous, reset, network)
         self.turn = 0
         BattleGUI.createBattleGUI( self )
     end
+    Battle.network = network
+    sigint:play()
     loveframes.SetState("Battle")
 end
 
 --- Tear down the state when leaving
 -- Called after every Gamestate.switch()
 function Battle:leave()
-    
+    sigint:stop()
 end
 
 --- Update the state

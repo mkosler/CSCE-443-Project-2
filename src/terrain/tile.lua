@@ -67,9 +67,6 @@ function Tile:draw(object)
 	
     love.graphics.setColor( body_color )
     g.rectangle("fill", object:GetX(), object:GetY(), object:GetWidth(), object:GetHeight())
-
-    love.graphics.setColor(outline_color)
-    skin.OutlinedRectangle(x, y, width, height)
     
     local text = self.name
     local font = skin.controls.button_text_font
@@ -92,6 +89,18 @@ function Tile:draw(object)
             love.graphics.line( x1, y1, x2, y2 )
         end
     end
+    
+    love.graphics.setColor(outline_color)
+    if self.img ~= nil then
+        local image = skin.images[ self.img ]
+        if image ~= nil then
+            local sx = width/image:getWidth() * math.pow( -1, 0 )
+            local sy = height/image:getHeight()
+            love.graphics.draw(image, rx+width*0, ry, 0, sx, sy, 0, 0 )
+        end
+    end
+
+    skin.OutlinedRectangle(x, y, width, height)
     
     if sub_unit ~= nil then
         sub_unit:draw(object)
